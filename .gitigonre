@@ -1,0 +1,24 @@
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+### GoodSync ###
+_gsdata_
+desktop.ini
+.vscode/launch.json
+python/templates/img/desktop.ini
+python/static/desktop.ini
+python/static/css/desktop.ini
+python/static/img/desktop.ini
+python/static/img/css/desktop.ini
+python/templates/desktop.ini
+python/templates/css/desktop.ini
+python/templates/img/desktop.ini
