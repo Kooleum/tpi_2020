@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * @author Benzonana Alexandre
+ * @version 1.0
+ * @date 25.05.2020
+ * @class IFA-P3B
+ * @title eiTicky
+ * @description Support ticket app for CFPT teacher
+ */
+
+ 
 session_start();
 require_once 'model/crud.php';
 
@@ -12,12 +23,13 @@ else
 $permission = [
     "Anonymous" => [
         "default" => "index",
-        "login" => "login",
+        "login" => "index",
         "createRequest" => "createRequest",
         "ViewOpenRequests" => "ViewOpenRequests",
     ],
     "Admin" => [
-        "default" => "index",
+        "default" => "viewTasks",
+        "viewMyRequests" => "viewMyRequests",
         "logout" => "logout",
         "createTask" => "createTask",
         "editTask" => "editTask",

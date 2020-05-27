@@ -1,0 +1,12 @@
+//DB
+user: eiticky_web
+password: SuperTPI2020
+
+//Users
+
+stephane.garchery@edu.ge.ch - SuperTPI - Admin
+edu-comminotp@eduge.ch - homeTPI2020 - Admin
+
+alexandre.bnznn@eduge.ch - SuperProg - Non Admin
+kelly.ngn@eduge.ch - TPITalent - Non Admin
+tiago.gmfrr@eduge.ch - TpiApplicant - Non Admin
