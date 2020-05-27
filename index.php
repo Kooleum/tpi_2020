@@ -22,10 +22,12 @@ else
 
 $permission = [
     "Anonymous" => [
-        "default" => "index",
-        "login" => "index",
+        "default" => "viewOpenRequests",
+        "index" => "viewOpenRequests",
+        "login" => "login",
         "createRequest" => "createRequest",
-        "ViewOpenRequests" => "ViewOpenRequests",
+        "viewOpenRequests" => "viewOpenRequests",
+        "faq" => "faq",
     ],
     "Admin" => [
         "default" => "viewTasks",
@@ -33,6 +35,7 @@ $permission = [
         "logout" => "logout",
         "createTask" => "createTask",
         "editTask" => "editTask",
+        "faq" => "faq",
     ],
 ];
 
