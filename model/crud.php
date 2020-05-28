@@ -145,7 +145,7 @@ function addRequest(string $titleRequest, string $typeRequest, string $levelRequ
             $req->bindParam(":idUserTo", $idUserTo, PDO::PARAM_INT);
         }
         if ($idLocation == "null") {
-            $req->bindParam(":idLocation",$idLocation, PDO::PARAM_NULL);
+            $req->bindParam(":idLocation", $idLocation, PDO::PARAM_NULL);
         } else {
             $req->bindParam(":idLocation", $idLocation, PDO::PARAM_INT);
         }
@@ -159,6 +159,7 @@ function addRequest(string $titleRequest, string $typeRequest, string $levelRequ
 
 /**
  * Edit a request
+ * @param int request id
  * @param string the title of the request
  * @param string the request type from given choices (software, hardware, other)
  * @param string the level of emergency from given choices (low, medium, high)
@@ -168,11 +169,11 @@ function addRequest(string $titleRequest, string $typeRequest, string $levelRequ
  * @param int id of the location for the request (can be "null")
  * @return bool query status 
  */
-function updateRequest($titleRequest, $typeRequest, $levelRequest, $descriptionRequest, $statusRequest, $idUserTo, $idLocation)
+function updateRequest(int $idRequest, string $titleRequest, string $typeRequest, string $levelRequest, string $descriptionRequest, string $statusRequest, $idUserTo, $idLocation)
 {
     try {
         $connexion = getConnexion();
-        $req = $connexion->prepare("UPDATE requests SET `titleRequest`=:titleRequest, `typeRequest`=:typeRequest, `levelRequest`=:levelRequest, `descriptionRequest`=:descriptionRequest, `statusRequest`=:statusRequest, `idUserTo`=:idUserTo, `idLocation`=:idLocation, `statusRequest`=:statusRequest");
+        $req = $connexion->prepare("UPDATE requests SET `titleRequest`=:titleRequest, `typeRequest`=:typeRequest, `levelRequest`=:levelRequest, `descriptionRequest`=:descriptionRequest, `statusRequest`=:statusRequest, `idUserTo`=:idUserTo, `idLocation`=:idLocation, `statusRequest`=:statusRequest WHERE idRequest = :idRequest");
         $req->bindParam(":titleRequest", $titleRequest, PDO::PARAM_STR);
         $req->bindParam(":typeRequest", $typeRequest, PDO::PARAM_STR);
         $req->bindParam(":levelRequest", $levelRequest, PDO::PARAM_STR);
@@ -180,6 +181,7 @@ function updateRequest($titleRequest, $typeRequest, $levelRequest, $descriptionR
         $req->bindParam(":idUserTo", $idUserTo, PDO::PARAM_INT);
         $req->bindParam(":idLocation", $idLocation, PDO::PARAM_INT);
         $req->bindParam(":statusRequest", $statusRequest, PDO::PARAM_INT);
+        $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
         $req->execute();
         return true;
     } catch (Exception $e) {
@@ -194,7 +196,7 @@ function updateRequest($titleRequest, $typeRequest, $levelRequest, $descriptionR
  * @param string status of the reuqest from given choices (waiting, handling, done)
  * @return bool query status 
  */
-function changeRequestStatus($idRequest, $status)
+function changeRequestStatus(int $idRequest, string $status)
 {
     try {
         $connexion = getConnexion();
@@ -272,11 +274,12 @@ function getNonAdmins()
  * Get all password from user email
  * @return string password
  */
-function getPassword($email){
+function getPassword(string $email)
+{
     $connexion = getConnexion();
     $req = $connexion->prepare("SELECT `password` FROM users WHERE isAdmin = 1 AND email = :email");
-        $req->bindParam(":email", $email, PDO::PARAM_INT);
-        $req->execute();
+    $req->bindParam(":email", $email, PDO::PARAM_INT);
+    $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC)[0]['password'];
 }
 
@@ -284,11 +287,12 @@ function getPassword($email){
  * Get all user infos from email
  * @return array users info
  */
-function getUserInfoFromEmail($email){
+function getUserInfoFromEmail(string $email)
+{
     $connexion = getConnexion();
     $req = $connexion->prepare("SELECT `idUser`, `lastName`, `firstName`, `isAdmin` FROM users WHERE email = :email");
-        $req->bindParam(":email", $email, PDO::PARAM_INT);
-        $req->execute();
+    $req->bindParam(":email", $email, PDO::PARAM_INT);
+    $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC)[0];
 }
 
@@ -304,4 +308,151 @@ function getLocations()
     $req = $connexion->prepare("SELECT idLocation, building, room FROM locations");
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC);
+}
+
+//Tasks
+
+/**
+ * Get all tasks
+ * @return array All tasks
+ */
+function getTasks()
+{
+    $connexion = getConnexion();
+    $req = $connexion->prepare("SELECT idTask, datetimeTask, statusTask, endDateValued, realEndDate, commentTask, managedBy, idRequest FROM tasks");
+    $req->execute();
+    return $req->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get all Admin tasks
+ * @param int admin id
+ * @return array All admin tasks
+ */
+function getAdminTasks($idAdmin)
+{
+    $connexion = getConnexion();
+    $req = $connexion->prepare("SELECT idTask, datetimeTask, statusTask, endDateValued, realEndDate, commentTask, managedBy, idRequest FROM tasks WHERE managedBy = :idAdmin");
+    $req->bindParam(":idAdmin", $idAdmin, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get all request tasks
+ * @param int admin id
+ * @param int request id
+ * @return array All request tasks
+ */
+function getAdminRequestTasks($idAdmin, $idRequest)
+{
+    $connexion = getConnexion();
+    $req = $connexion->prepare("SELECT idTask, datetimeTask, statusTask, endDateValued, realEndDate, commentTask, managedBy, idRequest FROM tasks WHERE idRequest = :idRequest AND managedBy = :idAdmin");
+    $req->bindParam(":idAdmin", $idAdmin, PDO::PARAM_INT);
+    $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get all request tasks
+ * @param string task status (waiting, progress, completed, canceled)
+ * @return array All request tasks
+ */
+function getTasksByStatus($status)
+{
+    $connexion = getConnexion();
+    $req = $connexion->prepare("SELECT idTask, datetimeTask, statusTask, endDateValued, realEndDate, commentTask, managedBy, idRequest FROM tasks WHERE statusTask = :statusTask");
+    $req->bindParam(":statusTask", $status, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Add a task to a request with the given params
+ * @param string the title of the task
+ * @param string detailed description of the task
+ * @param string when the task will be finished
+ * @param int admin who handle  the task
+ * @param string status of the task (waiting, progress, completed, canceled)
+ * @param int request to add the task to
+ * @return bool query status 
+ */
+function addTask(/*string $titleRequest,*/string $descriptionTask, string $endDateValued, int $managedBy, string $statusTask, int $idRequest)
+{
+    try {
+        $dateTask = date("Y-m-d H-i-s");
+        $connexion = getConnexion();
+        $req = $connexion->prepare("INSERT INTO requests (datetimeTask, statusTask, endDateValued, commentTask, managedBy, idRequest) VALUES (:datetimeTask, :statusTask, :endDateValued, :commentTask, :managedBy, 'idRequest')");
+        // $req->bindParam(":titleTask", $titleTask, PDO::PARAM_STR);
+        $req->bindParam(":datetimeTask", $dateTask, PDO::PARAM_STR);
+        $req->bindParam(":statusTask", $statusTask, PDO::PARAM_STR);
+        $req->bindParam(":endDateValued", $endDateValued, PDO::PARAM_STR);
+        $req->bindParam(":commentTask", $descriptionTask, PDO::PARAM_STR);
+        $req->bindParam(":managedBy", $managedBy, PDO::PARAM_INT);
+        $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
+        $req->execute();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+    return false;
+}
+
+/**
+ * Edit a task
+ * @param int task id
+ * @param string the title of the task
+ * @param string detailed description of the task
+ * @param string when the task will be finished
+ * @param int admin who handle  the task
+ * @param string status of the task (waiting, progress, completed, canceled)
+ * @param int request to add the task to
+ * @return bool query status 
+ */
+function updateTask(int $taskId, /*string $titleRequest,*/ string $descriptionTask, string $endDateValued, int $managedBy, string $statusTask, int $idRequest)
+{
+    try {
+        $connexion = getConnexion();
+        $req = $connexion->prepare("UPDATE requests SET `statusTask`=:statusTask, `endDateValued`=:endDateValued, `commentTask`=:commentTask, `managedBy`=:managedBy, `idRequest`=:idRequest, `statusRequest`=:statusReques WHERE idTask = :idTask");
+        // $req->bindParam(":titleTask", $titleTask, PDO::PARAM_STR);
+        $req->bindParam(":statusTask", $statusTask, PDO::PARAM_STR);
+        $req->bindParam(":endDateValued", $endDateValued, PDO::PARAM_STR);
+        $req->bindParam(":commentTask", $descriptionTask, PDO::PARAM_STR);
+        $req->bindParam(":managedBy", $managedBy, PDO::PARAM_INT);
+        $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
+        $req->bindParam(":idTask", $taskId, PDO::PARAM_INT);
+        $req->execute();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+    return false;
+}
+
+/**
+ * Edit task status
+ * @param int task id
+ * @param string task status
+ * @param string task real end date
+ * @return bool query status
+ */
+function updateTaskStatus(int $idTask, string $status, $endDate = null)
+{
+    try {
+        $connexion = getConnexion();
+        $req = $connexion->prepare("UPDATE requests SET `statusTask`=:statusTask, `realEndDate`=:endDateValued WHERE idTask = :idTask");
+        $req->bindParam(":statusTask", $status, PDO::PARAM_STR);
+        $req->bindParam(":idTask", $idTask, PDO::PARAM_INT);
+        if ($endDate == "null") {
+            $req->bindParam(":realEndDate", $endDate, PDO::PARAM_NULL);
+        } else {
+            $req->bindParam(":realEndDate", $endDate, PDO::PARAM_STR);
+        }
+        $req->execute();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+    return false;
 }

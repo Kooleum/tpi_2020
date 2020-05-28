@@ -8,3 +8,5 @@
  * @title eiTicky
  * @description Support ticket app for CFPT teacher
  */
+
+$error = "";

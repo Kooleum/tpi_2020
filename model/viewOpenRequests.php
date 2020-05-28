@@ -8,8 +8,3 @@
  * @title eiTicky
  * @description Support ticket app for CFPT teacher
  */
-
-$actual = explode(".", basename(__FILE__))[0];
-
-require "model/index.php";
-require "view/index.php";

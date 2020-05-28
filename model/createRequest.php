@@ -42,12 +42,13 @@ if ($submit == "submited") {
             $error = "<div class='alert alert-danger'>Une erreure est survenue</div>";
         }
     } else {
+        rollBackTransaction();
         $error = "<div class='alert alert-danger'>Un ou plusieurs champs obligatoires n'ont pas été renseignés</div>";
     }
 }
 
 /**
- * Create options for select form with all admins (select top)
+ * Create options for select form with all admins (select options)
  * @return string all the options 
  */
 function getAdminsOption()
