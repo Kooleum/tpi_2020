@@ -383,7 +383,7 @@ function addTask(/*string $titleRequest,*/string $descriptionTask, string $endDa
     try {
         $dateTask = date("Y-m-d H-i-s");
         $connexion = getConnexion();
-        $req = $connexion->prepare("INSERT INTO requests (datetimeTask, statusTask, endDateValued, commentTask, managedBy, idRequest) VALUES (:datetimeTask, :statusTask, :endDateValued, :commentTask, :managedBy, 'idRequest')");
+        $req = $connexion->prepare("INSERT INTO tasks (datetimeTask, statusTask, endDateValued, commentTask, managedBy, idRequest) VALUES (:datetimeTask, :statusTask, :endDateValued, :commentTask, :managedBy, :idRequest)");
         // $req->bindParam(":titleTask", $titleTask, PDO::PARAM_STR);
         $req->bindParam(":datetimeTask", $dateTask, PDO::PARAM_STR);
         $req->bindParam(":statusTask", $statusTask, PDO::PARAM_STR);
@@ -394,6 +394,7 @@ function addTask(/*string $titleRequest,*/string $descriptionTask, string $endDa
         $req->execute();
         return true;
     } catch (Exception $e) {
+        return $e;
         return false;
     }
     return false;
@@ -414,7 +415,7 @@ function updateTask(int $taskId, /*string $titleRequest,*/ string $descriptionTa
 {
     try {
         $connexion = getConnexion();
-        $req = $connexion->prepare("UPDATE requests SET `statusTask`=:statusTask, `endDateValued`=:endDateValued, `commentTask`=:commentTask, `managedBy`=:managedBy, `idRequest`=:idRequest, `statusRequest`=:statusReques WHERE idTask = :idTask");
+        $req = $connexion->prepare("UPDATE tasks SET `statusTask`=:statusTask, `endDateValued`=:endDateValued, `commentTask`=:commentTask, `managedBy`=:managedBy, `idRequest`=:idRequest, `statusRequest`=:statusReques WHERE idTask = :idTask");
         // $req->bindParam(":titleTask", $titleTask, PDO::PARAM_STR);
         $req->bindParam(":statusTask", $statusTask, PDO::PARAM_STR);
         $req->bindParam(":endDateValued", $endDateValued, PDO::PARAM_STR);
@@ -441,7 +442,7 @@ function updateTaskStatus(int $idTask, string $status, $endDate = null)
 {
     try {
         $connexion = getConnexion();
-        $req = $connexion->prepare("UPDATE requests SET `statusTask`=:statusTask, `realEndDate`=:endDateValued WHERE idTask = :idTask");
+        $req = $connexion->prepare("UPDATE tasks SET `statusTask`=:statusTask, `realEndDate`=:endDateValued WHERE idTask = :idTask");
         $req->bindParam(":statusTask", $status, PDO::PARAM_STR);
         $req->bindParam(":idTask", $idTask, PDO::PARAM_INT);
         if ($endDate == "null") {

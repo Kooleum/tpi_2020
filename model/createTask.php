@@ -29,10 +29,18 @@ if (!is_numeric($idRequest) && !is_numeric($idRequestSubmited)) {
 }
 if (is_numeric($idRequestSubmited)) {
     if (!empty($titleTask) && !empty($commentTask) && !empty($managedBy) && !empty($statusTask) && !empty($endDateValued)) {
-        echo 1;
-    } else {
-        $error = "<div class='alert alert-success'>La demande à été soumise</div>";
-        $error = "<div class='alert alert-danger'>Une erreure est survenue</div>";
+        try {
+            startTransaction();
+            if (!addTask($commentTask, $endDateValued, $managedBy, $statusTask, $idRequestSubmited)) {
+                //if an error append during inserting 
+                throw new Exception("Errer while executing sql query");
+            }
+            commitTransaction();
+            $error = "<div class='alert alert-success'>La tâche à été ajoutée à la demande</div>";
+        } catch (Exception $e) {
+            $error = "<div class='alert alert-danger'>Une erreure est survenue</div>";
+        }
+    } else {;
         $error = "<div class='alert alert-danger'>Un ou plusieurs champs obligatoires n'ont pas été renseignés</div>";
     }
 }
@@ -53,7 +61,7 @@ function getAdminsOption()
         $name = $admin['lastName'] . " " . $admin['firstName'] . " - " . $admin['email'];
         $value = $admin['idUser'];
         //if admin is selected adding selected to keep selection
-        $selected = $managedBy==$value?'selected':'';
+        $selected = $managedBy == $value ? 'selected' : '';
         //if this is the logged admin storing the option to make it first later
         if ($value == $actualAdmin) {
             $firstone = "<option value='$value' $selected>$name</option>";
