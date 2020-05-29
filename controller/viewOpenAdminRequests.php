@@ -11,5 +11,5 @@
 
 $actual = explode(".", basename(__FILE__))[0];
 
-require "model/viewMyRequests.php";
-require "view/viewMyRequests.php";
+require "model/viewOpenAdminRequests.php";
+require "view/viewOpenAdminRequests.php";

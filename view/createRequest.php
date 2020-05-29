@@ -78,9 +78,10 @@
                 <label for="userTo">En cours - Medias</label>
                 <input type="file" name="medias" class="form-control-file">
             </div>
-            
+
 
             <button class="btn btn-primary" name="submit" value="submited" type="submit">Envoyer la requette</button>
+        </form>
     </div>
     <?php require_once "footer.html" ?>
     </div>

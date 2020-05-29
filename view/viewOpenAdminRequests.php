@@ -33,7 +33,9 @@
                 <th scope="col">Date d'ouverture</th>
                 <th scope="col">Ouverte par</th>
                 <th scope="col">Administrateur en charge</th>
+                <th scope="col">Niveau d'urgence</th>
                 <th scope="col">Status</th>
+                <th scope="col">Détails</th>
             </thead>
             <tbody>
                 <?= $datas ?>
