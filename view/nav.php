@@ -7,8 +7,10 @@
         <ul class="navbar-nav mr-auto">
             <?php
             if (isset($_SESSION['log'])) {
-                echo '<li class="nav-item ' . ($actual == '' ? 'active' : '') . '"><a class="nav-link" href="?action=">?</a></li>';
-                echo '<li class="nav-item ' . ($actual == '' ? 'active' : '') . '"><a class="nav-link" href="?action=">?</a></li>';
+                echo '<li class="nav-item ' . ($actual == 'myOpenTasks' ? 'active' : '') . '"><a class="nav-link" href="?action=myOpenTasks">Mes tâches ouvertes</a></li>';
+                echo '<li class="nav-item ' . ($actual == 'viewMyRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewMyRequests">Mes demandes ouvertes</a></li>';
+                echo '<li class="nav-item ' . ($actual == 'viewUnownedRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewUnownedRequests">Demandes non affectées</a></li>';
+                echo '<li class="nav-item ' . ($actual == 'viewOpenAdminRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewOpenAdminRequests">Toutes les demandes ouvertes</a></li>';
                 echo '<li class="nav-item ' . ($actual == '' ? 'active' : '') . '"><a class="nav-link" href="?action=">?</a></li>';
             } else {
                 echo '<li class="nav-item ' . ($actual == 'viewOpenRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewOpenRequests">Voir les demandes ouvertes</a></li>';

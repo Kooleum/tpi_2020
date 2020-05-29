@@ -89,6 +89,18 @@ function getOpenAdminRequest($adminId)
 }
 
 /**
+ * Get all the open requests thath are unowned in the db 
+ * @return array All the open requests thaht are unowned
+ */
+function getOpenUnownedRequest()
+{
+    $connexion = getConnexion();
+    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, idUserFrom, idUserTo, idLocation FROM requests WHERE statusRequest != 'done' AND idUserTo is null");
+    $req->execute();
+    return $req->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
  * Get all the medias uploaded with the request
  * @param int id of the request
  * @return array All the medias of the given requests
@@ -110,10 +122,24 @@ function getRequestMedias($idRequest)
 function getRequestTasks($idRequest)
 {
     $connexion = getConnexion();
-    $req = $connexion->prepare("SELECT idTask, datetimeTask, statusTask, endDateValued, realEndDate, commentsTask, managedBy FROM tasks WHERE idRequest = :idRequest");
+    $req = $connexion->prepare("SELECT idTask, datetimeTask, statusTask, endDateValued, realEndDate, commentTask, managedBy FROM tasks WHERE idRequest = :idRequest");
     $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get data associated with the request
+ * @param int id of the request
+ * @return array All the tasks of the given requests
+ */
+function getRequestById($idRequest)
+{
+    $connexion = getConnexion();
+    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, idUserFrom, idUserTo, idLocation FROM requests WHERE idRequest = :idRequest");
+    $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll(PDO::FETCH_ASSOC)[0];
 }
 
 /**
@@ -296,6 +322,19 @@ function getUserInfoFromEmail(string $email)
     return $req->fetchAll(PDO::FETCH_ASSOC)[0];
 }
 
+/**
+ * Get all user infos from email
+ * @return array users info
+ */
+function getUserInfoFromId(int $idUser)
+{
+    $connexion = getConnexion();
+    $req = $connexion->prepare("SELECT `lastName`, `firstName`, `email`, `isAdmin` FROM users WHERE idUser = :idUser");
+    $req->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll(PDO::FETCH_ASSOC)[0];
+}
+
 //Locations
 
 /**
@@ -322,6 +361,19 @@ function getTasks()
     $req = $connexion->prepare("SELECT idTask, datetimeTask, statusTask, endDateValued, realEndDate, commentTask, managedBy, idRequest FROM tasks");
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get all tasks
+ * @return array All tasks
+ */
+function getTaskById($idTask)
+{
+    $connexion = getConnexion();
+    $req = $connexion->prepare("SELECT datetimeTask, statusTask, endDateValued, realEndDate, commentTask, managedBy, idRequest FROM tasks WHERE idTask = :idTask");
+    $req->bindParam(":idTask", $idTask, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll(PDO::FETCH_ASSOC)[0];
 }
 
 /**
@@ -450,6 +502,27 @@ function updateTaskStatus(int $idTask, string $status, $endDate = null)
         } else {
             $req->bindParam(":realEndDate", $endDate, PDO::PARAM_STR);
         }
+        $req->execute();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+    return false;
+}
+
+/**
+ * Edit task admin
+ * @param int task id
+ * @param int new owner
+ * @return bool query status
+ */
+function changeTaskAdmin(int $idTask, int $managedBy)
+{
+    try {
+        $connexion = getConnexion();
+        $req = $connexion->prepare("UPDATE tasks SET managedBy = :managedBy WHERE idTask = :idTask");
+        $req->bindParam(":managedBy", $managedBy, PDO::PARAM_INT);
+        $req->bindParam(":idTask", $idTask, PDO::PARAM_INT);
         $req->execute();
         return true;
     } catch (Exception $e) {

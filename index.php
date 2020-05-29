@@ -31,7 +31,13 @@ $permission = [
     ],
     "Admin" => [
         "default" => "viewTasks",
+        "viewOpenRequests" => "viewOpenAdminRequests",
+        "viewOpenAdminRequests" => "viewOpenAdminRequests",
         "viewMyRequests" => "viewMyRequests",
+        "viewUnownedRequests" => "viewUnownedRequests",
+        "changeRequestManager" => "changeRequestManager",
+        "changeTaskManager" => "changeTaskManager",
+        "requestDetails" => "requestDetails",
         "logout" => "logout",
         "createTask" => "createTask",
         "editTask" => "editTask",

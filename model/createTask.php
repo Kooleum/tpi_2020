@@ -27,6 +27,12 @@ if (!is_numeric($idRequest) && !is_numeric($idRequestSubmited)) {
     header("Location: ?action=viewMyRequests");
     exit();
 }
+$request = getRequestById($idRequest);
+if($request['idUserTo'] != $_SESSION['id']){
+    header("Location: ?action=viewMyRequests");
+    exit();
+}
+
 if (is_numeric($idRequestSubmited)) {
     if (!empty($titleTask) && !empty($commentTask) && !empty($managedBy) && !empty($statusTask) && !empty($endDateValued)) {
         try {
