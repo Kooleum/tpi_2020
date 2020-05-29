@@ -13,7 +13,8 @@ $idRequest = filter_input(INPUT_GET, "idRequest", FILTER_SANITIZE_NUMBER_INT);
 
 $statusT = ["waiting" => "En attente de traitement", "handling" => "Traitemenr en cours", "done" => "Terminé"];
 $statusTR = ["waiting" => "En attente de traitement", "progress" => "Traitemenr en cours", "completed" => "Terminé", "canceled" => "Annulée"];
-$emergencyLevelT = ["low" => "Faible", "medium" => "Modéré", "high" => "Haut"];
+$emergencyLevelColors = ["low" => "success", "medium" => "warning", "high" => "danger"];
+$emergencyLevelT = ["low" => "Faible", "medium" => "Modérée", "high" => "Haute"];
 $typeT = ["Hardware" => "Matériel", "Software" => "Logiciel", "Other" => "Autre"];
 
 
@@ -38,7 +39,7 @@ if (empty($request)) {
 $titleRequest = $request['titleRequest'];
 $descriptionRequest = $request['descriptionRequest'];
 $type = $typeT[$request['typeRequest']];
-$emergency = $emergencyLevelT[$request['levelRequest']];
+$emergency = "<span class='text-".$emergencyLevelColors[$request['levelRequest']]."'>".$emergencyLevelT[$request['levelRequest']]."</span>";
 
 if ($request['idUserTo'] == $_SESSION['id']) {
     $buttons = "<a href='?action=changeRequestStatus&idRequest=" . $idRequest . "&newStatus=waiting'><button class='btn btn-warning'>En attente</button></a>";
@@ -72,4 +73,21 @@ foreach ($tasks as $task) {
         $tasksTable .= "<a href='?action=" . "'><button class='btn btn-info mt-md-1'>Modifier l'avancement</button></a></td>";
     }
     $tasksTable .= "</tr>";
+}
+
+$medias = "Aucun média";
+
+$rMedias = getRequestMedias($idRequest);
+
+if(count($rMedias)>0){
+    $medias = "";
+}
+foreach($rMedias as $m){
+    $typeM = explode('/', $m['mime']);
+    if($typeM[0]=='image'){
+        $medias.="<a href='?action=viewMedia&idMedia=".$m['idMedia']."&a=view' target='_blank'><div class='maxSize'><img src='".$m['pathMedia']."' class='imgPreview'<figcaption>".$m['originalFileName']."</figcaption></div></a>";
+    }else{
+        $medias.="<a href='?action=viewMedia&idMedia=".$m['idMedia']."&a=view' target='_blank'><div class='maxSize'><img src='files/img/pdfIcon.png' class='pdfPreview'><figcaption>".$m['originalFileName']."</figcaption></div></a>";
+        // $medias.="<embed src='".$m['pathMedia']."' class='pdfPreview'>";
+    }
 }

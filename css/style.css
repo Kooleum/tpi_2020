@@ -8,3 +8,41 @@
     font-weight: normal;
     font-size: 20px;
 }
+
+@media screen and (min-width: 800px) {
+    .imgPreview {
+        max-width: 20vw;
+    }
+    .pdfPreview {
+        max-height: 20vh;
+    }
+    .maxSize {
+        max-width: 20vh;
+        display: block;
+        float: left;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .imgPreview {
+        max-width: 50%;
+    }
+    .pdfPreview {
+        max-width: 30%;
+    }
+    .spanMaxSize {
+        max-width: 20vw;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .imgPreview {
+        max-width: 100%;
+    }
+    .pdfPreview {
+        max-width: 45%;
+    }
+    .spanMaxSize {
+        max-width: 20vw;
+    }
+}

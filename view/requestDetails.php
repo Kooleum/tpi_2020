@@ -16,6 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Détails de la demande</title>
 </head>
@@ -25,21 +26,24 @@
     require_once 'nav.php';
     ?>
     <div class="container">
-        <div class="card text-dark bg-light border-grey" style="max-height:50vh; overflow:auto; width:100%;">
+        <div class="card text-dark bg-light border-grey" style="width:100%;">
             <div class="card-header text-left">
                 <h2><?= $titleRequest ?></h2>
-                <div><?= $type . " - " . $emergency ?></div>
+                <h5>Demande de type <?= $type . " - Urgence " . $emergency ?></h5>
                 <div class="mt-md-2">
                     <?= $buttons ?>
                 </div>
             </div>
-            <div class="card-body text-left">
+            <div style="max-height:30vh; overflow:auto;" class="card-body text-left">
                 <h3 class="card-title">Description détalliée</h3>
                 <p class="card-text p-1"><?= $descriptionRequest ?></p>
-                <h1>AFFICHER LES MEDIAS</h1>
+            </div>
+            <div class="card-body text-left">
+                <h3>Médias associés</h3>
+                <?= $medias ?>
             </div>
         </div>
-        <table class="mt-2 table table-dark" style="width:100%">
+        <table class="mt-2 table table-dark table-responsive-md" style="width:100%">
             <thead>
                 <tr>
                     <th colspan="5">Tâches</th>

@@ -117,7 +117,7 @@ function getOpenUnownedRequest()
 function getRequestMedias($idRequest)
 {
     $connexion = getConnexion();
-    $req = $connexion->prepare("SELECT idMedia, datetimeMedia, pathMedia, fileName, extenssion, originalFileName FROM medias WHERE idRequest = :idRequest");
+    $req = $connexion->prepare("SELECT idMedia, datetimeMedia, pathMedia, `fileName`, extension, mime, originalFileName FROM medias WHERE idRequest = :idRequest");
     $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC);
@@ -541,6 +541,21 @@ function changeTaskAdmin(int $idTask, int $managedBy)
 }
 
 //medias
+
+/**
+ * Get media
+ * @param int id media
+ * @return array media infos
+ */
+function getMediaById(int $idMedia)
+{
+    $connexion = getConnexion();
+    $req = $connexion->prepare("SELECT `datetimeMedia`, `pathMedia`, `fileName`, `extension`, `mime`, `originalFileName`, `idRequest` FROM `medias` WHERE idMedia = :idMedia");
+    $req->bindParam(":idMedia", $idMedia, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll(PDO::FETCH_ASSOC)[0];
+}
+
 
 /**
  * insert media for request
