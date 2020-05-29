@@ -38,6 +38,7 @@ $permission = [
         "changeRequestManager" => "changeRequestManager",
         "changeTaskManager" => "changeTaskManager",
         "requestDetails" => "requestDetails",
+        "changeRequestStatus" => "changeRequestStatus",
         "logout" => "logout",
         "createTask" => "createTask",
         "editTask" => "editTask",

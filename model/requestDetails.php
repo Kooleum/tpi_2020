@@ -41,13 +41,13 @@ $type = $typeT[$request['typeRequest']];
 $emergency = $emergencyLevelT[$request['levelRequest']];
 
 if ($request['idUserTo'] == $_SESSION['id']) {
-    $buttons = "<a href='?action=&idRequest='><button class='btn btn-warning'>En attente</button></a>";
-    $buttons .= "<a href='?action=&idRequest='><button class='btn btn-primary ml-md-1'>Traitement</button></a>";
-    $buttons .= "<a href='?action=&idRequest='><button class='btn btn-success ml-md-1'>Terminé</button></a>";
-    $buttons .= "<a href='?action=&idRequest='><button class='btn btn-info ml-md-1'>Envoyer un mail</button></a>";
+    $buttons = "<a href='?action=changeRequestStatus&idRequest=" . $idRequest . "&newStatus=waiting'><button class='btn btn-warning'>En attente</button></a>";
+    $buttons .= "<a href='?action=changeRequestStatus&idRequest=" . $idRequest . "&newStatus=handling'><button class='btn btn-primary ml-md-1'>Traitement</button></a>";
+    $buttons .= "<a href='?action=changeRequestStatus&idRequest=" . $idRequest . "&newStatus=done'><button class='btn btn-success ml-md-1'>Terminé</button></a>";
+    $buttons .= "<a href='?action=&idRequest=" . $idRequest . "&newStatus=sendEmail'><button class='btn btn-info ml-md-1'>Envoyer un mail</button></a>";
 
     $createTaskButton = '<a class="float-right" href="?action=createTask&idRequest=' . $idRequest . '>"><button class="btn btn-primary">Ajouter une tâche</button></a>';
-}else{
+} else {
     $createTaskButton = '<button class="btn btn-secondary float-right">Ajouter une tâche</button>';
 }
 
@@ -67,7 +67,7 @@ foreach ($tasks as $task) {
     $tasksTable .= "<td>" . $task['realEndDate'] . "</td>";
     $tasksTable .= "<td>" . $statusTR[$task['statusTask']] . "</td>";
     $tasksTable .= "<td>" . $owner['lastName'] . " " . $owner['firstName'] . " - " . $owner['email'] . "</td>";
-    if($task['managedBy'] == $_SESSION['id']){
+    if ($task['managedBy'] == $_SESSION['id']) {
         $tasksTable .= "<td><a href='?action=changeTaskManager&idTask=" . $task['idTask'] . "'><button class='btn btn-primary mt-md-1'>Réassigner</button></a>";
         $tasksTable .= "<a href='?action=" . "'><button class='btn btn-info mt-md-1'>Modifier l'avancement</button></a></td>";
     }
