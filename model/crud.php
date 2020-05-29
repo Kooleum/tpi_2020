@@ -31,6 +31,15 @@ function getConnexion()
     return $db;
 }
 
+/**
+ * get las inserted id in database
+ * @return int last id
+ */
+function lasInsertId()
+{
+    return getConnexion()->lastInsertId();
+}
+
 //Transaction functions
 function startTransaction()
 {
@@ -523,6 +532,40 @@ function changeTaskAdmin(int $idTask, int $managedBy)
         $req = $connexion->prepare("UPDATE tasks SET managedBy = :managedBy WHERE idTask = :idTask");
         $req->bindParam(":managedBy", $managedBy, PDO::PARAM_INT);
         $req->bindParam(":idTask", $idTask, PDO::PARAM_INT);
+        $req->execute();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+    return false;
+}
+
+//medias
+
+/**
+ * insert media for request
+ * @param int id of the request
+ * @param string original media name
+ * @param string new media name
+ * @param string media path
+ * @param string file extension
+ * @param string real file type
+ * @return bool query state
+ */
+function addRequestMedia(int $idRequest, string $originalName, string $newName, string $path, string $extension, string $mime)
+{
+    $dateMedia = date("Y-m-d H-i-s");
+
+    try {
+        $connexion = getConnexion();
+        $req = $connexion->prepare("INSERT INTO `medias`(`datetimeMedia`, `pathMedia`, `fileName`, `extension`, `mime`, `originalFileName`, `idRequest`) VALUES (:dateMedia, :mediaPath, :newFileName, :extension, :mime, :originalName, :idRequest )");
+        $req->bindParam(":dateMedia", $dateMedia, PDO::PARAM_STR);
+        $req->bindParam(":mediaPath", $path, PDO::PARAM_STR);
+        $req->bindParam(":newFileName", $newName, PDO::PARAM_STR);
+        $req->bindParam(":originalName", $originalName, PDO::PARAM_STR);
+        $req->bindParam(":extension", $extension, PDO::PARAM_STR);
+        $req->bindParam(":mime", $mime, PDO::PARAM_STR);
+        $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
         $req->execute();
         return true;
     } catch (Exception $e) {
