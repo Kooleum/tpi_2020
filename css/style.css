@@ -9,6 +9,17 @@
     font-size: 20px;
 }
 
+#confirmBox {
+    position: absolute;
+    width: 50vw;
+    height: 50vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
 @media screen and (min-width: 800px) {
     .imgPreview {
         max-width: 20vw;

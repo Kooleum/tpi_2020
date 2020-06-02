@@ -16,27 +16,38 @@ $status = ['waiting', 'handling', 'done'];
 
 $error = "";
 
-if(!is_numeric($idRequest)||empty($newStatus)){
-    header("Location: ?action=requestDetails&idRequest=".$idRequest."&error=error");
+if (!is_numeric($idRequest) || empty($newStatus)) {
+    header("Location: ?action=requestDetails&idRequest=" . $idRequest . "&error=error");
     exit();
 }
 
 $request = getRequestById($idRequest);
 
-if($request['idUserTo'] != $_SESSION['id']){
-    header("Location: ?action=requestDetails&idRequest=".$idRequest."&error=error");
+if ($request['idUserTo'] != $_SESSION['id']) {
+    header("Location: ?action=requestDetails&idRequest=" . $idRequest . "&error=error");
     exit();
 }
 
-if(in_array($newStatus, $status)){
+if (in_array($newStatus, $status)) {
     changeRequestStatus($idRequest, $newStatus);
-    header("Location: ?action=requestDetails&idRequest=".$idRequest."&error=ok");
+    header("Location: ?action=requestDetails&idRequest=" . $idRequest . "&error=ok");
     exit();
-}elseif($newStatus == "sendEmail"){
+} elseif ($newStatus == "sendEmail") {
     echo "TODO";
     // header("Location: ?action=requestDetails&idRequest=".$idRequest."&error=ok");
     exit();
-}else{
-    header("Location: ?action=requestDetails&idRequest=".$idRequest."&error=error");
+} elseif ($newStatus == "remove") {
+    startTransaction();
+    if (removeRequestTasks($idRequest)) {
+        if (removeRequest($idRequest)) {
+            header("Location: ?action=requestDetails&idRequest=" . $idRequest . "&error=ok");
+            commitTransaction();
+        }
+    }
+    rollBackTransaction();
+    header("Location: ?action=requestDetails&idRequest=" . $idRequest . "&error=error");
+    exit();
+} else {
+    header("Location: ?action=requestDetails&idRequest=" . $idRequest . "&error=error");
     exit();
 }
