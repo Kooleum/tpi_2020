@@ -40,6 +40,15 @@ if (empty($request)) {
     exit();
 }
 
+$locationRequest = "Non applicable";
+
+if ($request['idLocation']) {
+    $location = getLocationById($request['idLocation']);
+    $locationRequest = $location['building'] . " - " . $location['room'];
+}
+
+
+
 $titleRequest = $request['titleRequest'];
 $descriptionRequest = $request['descriptionRequest'];
 $type = $typeT[$request['typeRequest']];

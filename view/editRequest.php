@@ -33,22 +33,22 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="titleRequest">Titre de la demande</label>
                 <div class="col-sm-10">
-                    <input type="text" name="titleRequest" id="titleRequest" class="form-control" required />
+                    <input type="text" name="titleRequest" id="titleRequest" class="form-control" required value="<?= $titleRequest ?>" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="titleRequest">Description détalilée de la demande</label>
                 <div class="col-sm-10">
-                    <textarea name="descriptionRequest" id="descriptionRequest" class="form-control"></textarea>
+                    <textarea name="descriptionRequest" id="descriptionRequest" class="form-control"><?= $descriptionRequest ?></textarea>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="type">Type de demande</label>
                 <div class="col-sm-10">
                     <select id="type" class="form-control" name="type" required>
-                        <option value="hardware">Hardware</option>
-                        <option value="software">Software</option>
-                        <option value="other">Autre</option>
+                        <option value="hardware" <?= $type == "hardware" ? 'selected' : '' ?>>Hardware</option>
+                        <option value="software" <?= $type == "software" ? 'selected' : '' ?>>Software</option>
+                        <option value="other" <?= $type == "other" ? 'selected' : '' ?>>Autre</option>
                     </select>
                 </div>
             </div>
@@ -56,9 +56,9 @@
                 <label class="col-sm-2 col-form-label" for="emergencyLevel">Niveau d'urgence</label>
                 <div class="col-sm-10">
                     <select id="emergencyLevel" class="form-control" name="emergencyLevel" required>
-                        <option value="low">Failbe</option>
-                        <option value="medium">moyen</option>
-                        <option value="high">Haut</option>
+                        <option value="low" <?= $emergencyLevel == "low" ? 'selected' : '' ?>>Failbe</option>
+                        <option value="medium" <?= $emergencyLevel == "medium" ? 'selected' : '' ?>>moyen</option>
+                        <option value="high" <?= $emergencyLevel == "high" ? 'selected' : '' ?>>Haut</option>
                     </select>
                 </div>
             </div>
@@ -66,17 +66,7 @@
                 <label class="col-sm-2 col-form-label" for="userTo">Demande à destination de</label>
                 <div class="col-sm-10">
                     <select id="userTo" class="form-control" name="userTo" required>
-                        <option value="null">N'importe quel administrateur</option>
                         <?= getAdminsOption() ?>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="userFrom">Demande de</label>
-                <div class="col-sm-10">
-                    <select id="userFrom" class="form-control" name="userFrom" required>
-                        <option></option>
-                        <?= getNonAdminsOption() ?>
                     </select>
                 </div>
             </div>
@@ -90,13 +80,6 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="medias">Medias <small class="text-info"><b>(image ou pdf)</b></small></label>
-                <div class="col-sm-10">
-                    <input type="file" id="medias" name="medias[]" accept="image/*, application/pdf" multiple class="form-control-file">
-                </div>
-            </div>
-
             <button class="btn btn-primary" name="submit" value="submited" type="submit">Modifier la demande</button>
         </form>
     </div>

@@ -76,7 +76,7 @@
                 <div class="col-sm-10">
                     <select id="userFrom" class="form-control" name="userFrom" required>
                         <option></option>
-                        <?= getNonAdminsOption() ?>
+                        <?= getUsersOption() ?>
                     </select>
                 </div>
             </div>

@@ -18,16 +18,24 @@ $datas = "";
 foreach($requests as $request){
     $userOpen = getUserInfoFromId($request['idUserFrom']);
 
+    if ($request['idLocation']){
+        $location = getLocationById($request['idLocation']);
+    }
+    
     $datas.="<tr>";
     $datas.="<td>".$request['titleRequest']."</td>";
     $datas.="<td><div style='max-height:20vh;overflow:auto;'>".$request['descriptionRequest']."</div></td>";
     $datas.="<td>".$request['datetimeRequest']."</td>";
     $datas.="<td>".$userOpen['lastName']." ".$userOpen['firstName']." - ".$userOpen['email']."</td>";
+    if ($request['idLocation']){
+        $datas .= "<td>" . $location['building'] ." - ". $location['room'] . "</td>";
+    }else{
+        $datas .= "<td>Non applicable</td>";
+    }
     $datas.="<td class='".$emergencyLevelColors[$request['levelRequest']]."'>".$emergencyLevel[$request['levelRequest']]."</td>";
     $datas.="<td>".$status[$request['statusRequest']]."</td>";
-    $datas .= "<td><a href='?action=requestDetails&idRequest=" . $request['idRequest'] . "'><button class='btn btn-success'>Voir les détails</button></a>";
-    $datas.="<a href='?action=changeRequestManager&idRequest=".$request['idRequest']."'><button class='btn btn-primary mt-md-1'>Réassigner</button></a>";
-    $datas.="<a href='?action=requestDetails&idRequest=" . $request['idRequest'] . "'><button class='btn btn-info mt-md-1'>Modifier l'avancement</button></a></td>";
+    $datas .= "<td><a href='?action=requestDetails&idRequest=" . $request['idRequest'] . "'><button class='btn btn-success'>Voir les détails / modifier</button></a>";
+    $datas.="<a href='?action=changeRequestManager&idRequest=".$request['idRequest']."'><button class='btn btn-primary mt-md-1'>Réassigner</button></a></td>";
     $datas.="</tr>";
 
 }

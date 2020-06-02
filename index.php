@@ -49,6 +49,7 @@ $permission = [
         "createTask" => "createTask",
         "editRequest" => "editRequest",
         "editTask" => "editTask",
+        "createRequest" => "createRequest",
         "faq" => "faq",
     ],
 ];

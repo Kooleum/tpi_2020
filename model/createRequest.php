@@ -116,22 +116,24 @@ function getAdminsOption()
 }
 
 /**
- * Create options for select form with all non-admins (select from)
+ * Create options for select form with all users (select from)
  * @return string all the options 
  */
-function getNonAdminsOption()
+function getUsersOption()
 {
-    $nonAdmins = getNonAdmins();
+    $users = getUsers();
 
     $options = "";
 
-    foreach ($nonAdmins as $nonAdmin) {
-        $name = $nonAdmin['lastName'] . " " . $nonAdmin['firstName'] . " - " . $nonAdmin['email'];
-        $value = $nonAdmin['idUser'];
+    foreach ($users as $user) {
+        $name = $user['lastName'] . " " . $user['firstName'] . " - " . $user['email'];
+        $name .= $user['isAdmin']?' (Admin)':'';
+        $value = $user['idUser'];
         $options .= "<option value='$value'>$name</option>";
     }
     return $options;
 }
+
 
 /**
  * Create options for select form with all locations
