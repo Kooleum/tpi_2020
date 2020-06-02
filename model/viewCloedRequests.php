@@ -9,10 +9,9 @@
  * @description Support ticket app for CFPT teacher
  */
 
-$requests = getOpenRequests();
+$requests = getCloedRequests();
 $status = ["waiting" => "En attente de traitement", "handling" => "Traitement en cours", "done" => "Terminé"];
 $emergencyLevel = ["low" => "Faible", "medium" => "Modéré", "high" => "Haut"];
-$emergencyLevelColors = ["low" => "bg-success", "medium" => "bg-warning", "high" => "bg-danger"];
 
 $datas = "";
 foreach ($requests as $request) {
@@ -22,6 +21,7 @@ foreach ($requests as $request) {
     } else {
         $userHandling = "Aucun administrateur assigné";
     }
+
 
     $datas .= "<tr>";
     $datas .= "<td>" . $request['titleRequest'] . "</td>";
@@ -33,8 +33,8 @@ foreach ($requests as $request) {
     } else {
         $datas .= "<td>" . $userHandling . "</td>";
     }
-    $datas .= "<td class='" . $emergencyLevelColors[$request['levelRequest']] . "'>" . $emergencyLevel[$request['levelRequest']] . "</td>";
+    $datas .= "<td>" . $emergencyLevel[$request['levelRequest']] . "</td>";
     $datas .= "<td>" . $status[$request['statusRequest']] . "</td>";
-    $datas .= "<td><a href='?action=requestDetails&idRequest=" . $request['idRequest'] . "'><button class='btn btn-success'>Voir les détails</button></a>";
+    $datas .= "<td><a href='?action=requestDetails&idRequest=" . $request['idRequest'] . "'><button class='btn btn-success'>Voir les détails</button></a></td>";
     $datas .= "</tr>";
 }

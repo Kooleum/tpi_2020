@@ -9,6 +9,10 @@
     font-size: 20px;
 }
 
+body {
+    min-height: 100vh;
+}
+
 #confirmBox {
     position: absolute;
     width: 50vw;

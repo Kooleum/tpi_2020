@@ -16,11 +16,12 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Dashboard</title>
 </head>
 
-<body class="text-white bg-dark text-center bdbg">
+<body class="text-white bg-dark text-center ">
     <?php
     require_once 'view/nav.php';
     ?>
@@ -30,14 +31,14 @@
         <div class="mt-5">
             <span class="border rounded border-info row my-2 py-2 px-2 justify-content-center">
                 <h3 class="col-12">Mes demandes non résolues</h3>
-                <div class="card text-white bg-dark border-danger col-md-10 my-2">
-                    <div class="card-header">
-                        <h4>Demandes non assignées</h4>
+                    <div class="card text-white bg-dark border-danger col-md-10 my-2">
+                        <div class="card-header">
+                            <h4>Demandes non assignées</h4>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-text"><?= $unownedRequests ?></h3>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h3 class="card-text"><?= $unownedRequests ?></h3>
-                    </div>
-                </div>
                 <div class="card text-white bg-dark border-danger col-md-3 my-2">
                     <div class="card-header">
                         <h4>Demandes urgentes ouvertes</h4>
@@ -66,6 +67,14 @@
             </span>
             <span class="border rounded border-light row py-2 px-2 my-2 justify-content-center">
                 <h3 class="col-12">Mes tâches</h3>
+                <div class="card text-white bg-dark border-danger col-md-10 my-2">
+                        <div class="card-header">
+                            <h4>Tâches en retard</h4>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-text"><?= $lateTasks ?></h3>
+                        </div>
+                    </div>
                 <div class="card text-white bg-dark border-warning col-md-5 my-2">
                     <div class="card-header">
                         <h4>Tâches ouvertes</h4>

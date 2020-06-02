@@ -21,7 +21,7 @@
     <title>Détails de la demande</title>
 </head>
 
-<body class="text-white bg-dark text-center bdbg">
+<body class="text-white bg-dark text-center ">
     <?php
     require_once 'nav.php';
     ?>
@@ -46,7 +46,7 @@
                     <?= $medias ?>
                 </div>
             </div>
-            <table class="mt-2 table table-dark table-responsive-md col-12">
+            <table class="mt-2 table table-dark table-responsive col-12">
                 <thead>
                     <tr>
                         <th colspan="6">Tâches</th>

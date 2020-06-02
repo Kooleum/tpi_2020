@@ -10,7 +10,7 @@
  */
 
  $requests = getOpenUnownedRequest();
-$status = ["waiting"=>"En attente de traitement", "handling"=>"Traitemenr en cours", "done"=>"Terminé"];
+$status = ["waiting"=>"En attente de traitement", "handling"=>"Traitement en cours", "done"=>"Terminé"];
 $emergencyLevel = ["low"=>"Faible", "medium"=>"Modéré", "high"=>"Haut"];
 $emergencyLevelColors = ["low"=>"", "medium"=>"bg-warning", "high"=>"bg-danger"];
 

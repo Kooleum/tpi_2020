@@ -11,12 +11,14 @@
 
 $error = "";
 
-$emergencyOpen = count(getRequestByAdminLevelStatus(1, "high", "open"));
-$emergencyClosed = count(getRequestByAdminLevelStatus(1, "high", "closed"));
-$meduimOpen = count(getRequestByAdminLevelStatus(1, "medium", "open"));
-$meduimClosed = count(getRequestByAdminLevelStatus(1, "medium", "closed"));
-$lowOpen = count(getRequestByAdminLevelStatus(1, "low", "open"));
-$lowClosed = count(getRequestByAdminLevelStatus(1, "low", "closed"));
+//get stats from db
+$emergencyOpen = count(getRequestByAdminLevelStatus($_SESSION['id'], "high", "open"));
+$emergencyClosed = count(getRequestByAdminLevelStatus($_SESSION['id'], "high", "closed"));
+$meduimOpen = count(getRequestByAdminLevelStatus($_SESSION['id'], "medium", "open"));
+$meduimClosed = count(getRequestByAdminLevelStatus($_SESSION['id'], "medium", "closed"));
+$lowOpen = count(getRequestByAdminLevelStatus($_SESSION['id'], "low", "open"));
+$lowClosed = count(getRequestByAdminLevelStatus($_SESSION['id'], "low", "closed"));
 $unownedRequests = count(getOpenUnownedRequest());
-$openTasks = 0;
-$closedTasks = 0;
+$openTasks = count(getAdminTasks($_SESSION['id'], "open"));
+$closedTasks = count(getAdminTasks($_SESSION['id'], "cloed"));
+$lateTasks = count(getLateTasksByIdAdmin($_SESSION['id']));

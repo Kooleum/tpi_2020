@@ -19,15 +19,15 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Créer une demande</title>
+    <title>Modifier une demande</title>
 </head>
 
-<body class="text-white  text-center bg-dark ">
+<body class="text-white text-center bg-dark ">
     <?php
     require_once 'nav.php';
     ?>
     <div class="container mt-2">
-        <h2 class="text-center">Formuler une demande</h2>
+        <h2 class="text-center">Modifier une demande</h2>
         <?= $error ?>
         <form action="#" method="post" enctype="multipart/form-data">
             <div class="form-group row">
@@ -97,7 +97,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary" name="submit" value="submited" type="submit">Envoyer la demande</button>
+            <button class="btn btn-primary" name="submit" value="submited" type="submit">Modifier la demande</button>
         </form>
     </div>
     <?php require_once "footer.html" ?>

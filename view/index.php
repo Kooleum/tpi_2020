@@ -16,15 +16,16 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title></title>
 </head>
 
-<body class="text-white bg-dark text-center bdbg">
+<body class="text-white bg-dark text-center ">
     <?php
     require_once 'nav.php';
     ?>
-    <div class="container d-flex w-100 p-3 mx-auto flex-column  align-content-center">
+    <div class="container">
 
     </div>
     <?php require_once "footer.html" ?>
