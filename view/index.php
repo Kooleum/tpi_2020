@@ -28,7 +28,6 @@
 
     </div>
     <?php require_once "footer.html" ?>
-    </div>
 </body>
 
 </html>

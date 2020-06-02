@@ -10,7 +10,7 @@
  */
 
 $requests = getOpenRequests();
-$status = ["waiting" => "En attente de traitement", "handling" => "Traitemenr en cours", "done" => "Terminé"];
+$status = ["waiting" => "En attente de traitement", "handling" => "Traitement en cours", "done" => "Terminé"];
 $emergencyLevel = ["low" => "Faible", "medium" => "Modéré", "high" => "Haut"];
 
 $datas = "";
@@ -35,5 +35,6 @@ foreach ($requests as $request) {
     }
     $datas .= "<td>" . $emergencyLevel[$request['levelRequest']] . "</td>";
     $datas .= "<td>" . $status[$request['statusRequest']] . "</td>";
+    $datas .= "<td><a href='?action=requestDetails&idRequest=" . $request['idRequest'] . "'><button class='btn btn-success'>Voir les détails</button></a></td>";
     $datas .= "</tr>";
 }

@@ -37,7 +37,7 @@ if (is_numeric($idRequestSubmited)) {
     if (!empty($titleTask) && !empty($commentTask) && !empty($managedBy) && !empty($statusTask) && !empty($endDateValued)) {
         try {
             startTransaction();
-            if (!addTask($commentTask, $endDateValued, $managedBy, $statusTask, $idRequestSubmited)) {
+            if (!addTask($titleTask, $commentTask, $endDateValued, $managedBy, $statusTask, $idRequestSubmited)) {
                 //if an error append during inserting 
                 throw new Exception("Errer while executing sql query");
             }

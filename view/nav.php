@@ -7,6 +7,7 @@
         <ul class="navbar-nav mr-auto">
             <?php
             if (isset($_SESSION['log'])) {
+                echo '<li class="nav-item ' . ($actual == 'dashboard' ? 'active' : '') . '"><a class="nav-link" href="?action=dashboard">Dashboard</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'myOpenTasks' ? 'active' : '') . '"><a class="nav-link" href="?action=myOpenTasks">Mes tâches ouvertes</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'viewMyRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewMyRequests">Mes demandes ouvertes</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'viewUnownedRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewUnownedRequests">Demandes non affectées</a></li>';

@@ -46,7 +46,6 @@
             </form>
         </div>
         <?php require_once "view/footer.html" ?>
-    </div>
 </body>
 
 </html>

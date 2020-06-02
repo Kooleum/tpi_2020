@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title></title>
+    <title>Changer le propiétaire de la demande</title>
 </head>
 
 <body class="text-white bg-dark text-center bdbg">
@@ -25,7 +25,7 @@
     require_once 'nav.php';
     ?>
     <div class="container">
-        <h2 class="text-warning mt-md-3">⚠</h2>
+        <h2 class="text-warning mt-md-3">&#9888; </h2>
         <h3 class="text-warning mt-md-3"><?= $messageWarning ?></h3>
         <form action="#" method="post">
             <?= $error ?>
@@ -43,7 +43,6 @@
         </form>
     </div>
     <?php require_once "footer.html" ?>
-    </div>
 </body>
 
 </html>
