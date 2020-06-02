@@ -12,11 +12,11 @@
                 echo '<li class="nav-item ' . ($actual == 'viewMyRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewMyRequests">Mes demandes ouvertes</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'viewUnownedRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewUnownedRequests">Demandes non affectées</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'viewOpenAdminRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewOpenAdminRequests">Toutes les demandes ouvertes</a></li>';
-                echo '<li class="nav-item ' . ($actual == 'viewCloedRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewCloedRequests">Demandes résolues</a></li>';
+                echo '<li class="nav-item ' . ($actual == 'viewClosedRequests.php' ? 'active' : '') . '"><a class="nav-link" href="?action=viewClosedRequests.php">Demandes résolues</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'createRequest' ? 'active' : '') . '"><a class="nav-link" href="?action=createRequest">Créer une demande</a></li>';
             } else {
                 echo '<li class="nav-item ' . ($actual == 'viewOpenRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewOpenRequests">Voir les demandes ouvertes</a></li>';
-                echo '<li class="nav-item ' . ($actual == 'viewCloedRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewCloedRequests">Demandes résolues</a></li>';
+                echo '<li class="nav-item ' . ($actual == 'viewClosedRequests.php' ? 'active' : '') . '"><a class="nav-link" href="?action=viewClosedRequests.php">Demandes résolues</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'createRequest' ? 'active' : '') . '"><a class="nav-link" href="?action=createRequest">Créer une demande</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'login' ? 'active' : '') . '"><a class="nav-link" href="?action=login">Login</a></li>';
             }
