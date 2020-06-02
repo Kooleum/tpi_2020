@@ -27,10 +27,12 @@ $permission = [
         "login" => "login",
         "createRequest" => "createRequest",
         "viewOpenRequests" => "viewOpenRequests",
+        "requestDetails" => "requestDetails",
+        "viewMedia" => "viewMedia",
         "faq" => "faq",
     ],
     "Admin" => [
-        "default" => "viewTasks",
+        "default" => "dashboard",
         "viewOpenRequests" => "viewOpenAdminRequests",
         "viewOpenAdminRequests" => "viewOpenAdminRequests",
         "viewMyRequests" => "viewMyRequests",
