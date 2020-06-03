@@ -57,6 +57,10 @@ try {
 
     $mail->send();
     echo 'Message has been sent';
+
+    header("Location: ?action=requestDetails&idRequest=".$idRequest);
+    exit();
+
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
