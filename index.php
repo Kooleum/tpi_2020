@@ -9,7 +9,7 @@
  * @description Support ticket app for CFPT teacher
  */
 
- 
+
 session_start();
 require_once 'model/crud.php';
 
