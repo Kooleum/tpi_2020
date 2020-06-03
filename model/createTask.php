@@ -28,7 +28,7 @@ if (!is_numeric($idRequest) && !is_numeric($idRequestSubmited)) {
     exit();
 }
 $request = getRequestById($idRequest);
-if($request['idUserTo'] != $_SESSION['id']){
+if ($request['idUserTo'] != $_SESSION['id']) {
     header("Location: ?action=viewMyRequests");
     exit();
 }
@@ -50,6 +50,7 @@ if (is_numeric($idRequestSubmited)) {
         $error = "<div class='alert alert-danger'>Un ou plusieurs champs obligatoires n'ont pas été renseignés</div>";
     }
 }
+
 /**
  * Create options for select form with all admins (select options) but the first one is the one who is logged
  * @return string all the options 

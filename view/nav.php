@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-dark navbar-expand-md">
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
     <a class="navbar-brand" href="?action=index">eiTicky</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -12,11 +12,11 @@
                 echo '<li class="nav-item ' . ($actual == 'viewMyRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewMyRequests">Mes demandes ouvertes</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'viewUnownedRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewUnownedRequests">Demandes non affectées</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'viewOpenAdminRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewOpenAdminRequests">Toutes les demandes ouvertes</a></li>';
-                echo '<li class="nav-item ' . ($actual == 'viewClosedRequests.php' ? 'active' : '') . '"><a class="nav-link" href="?action=viewClosedRequests.php">Demandes résolues</a></li>';
+                echo '<li class="nav-item ' . ($actual == 'viewClosedRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewClosedRequests">Demandes résolues</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'createRequest' ? 'active' : '') . '"><a class="nav-link" href="?action=createRequest">Créer une demande</a></li>';
             } else {
                 echo '<li class="nav-item ' . ($actual == 'viewOpenRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewOpenRequests">Voir les demandes ouvertes</a></li>';
-                echo '<li class="nav-item ' . ($actual == 'viewClosedRequests.php' ? 'active' : '') . '"><a class="nav-link" href="?action=viewClosedRequests.php">Demandes résolues</a></li>';
+                echo '<li class="nav-item ' . ($actual == 'viewClosedRequests' ? 'active' : '') . '"><a class="nav-link" href="?action=viewClosedRequests">Demandes résolues</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'createRequest' ? 'active' : '') . '"><a class="nav-link" href="?action=createRequest">Créer une demande</a></li>';
                 echo '<li class="nav-item ' . ($actual == 'login' ? 'active' : '') . '"><a class="nav-link" href="?action=login">Login</a></li>';
             }

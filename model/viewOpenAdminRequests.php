@@ -24,17 +24,17 @@ foreach ($requests as $request) {
     }
 
     $datas .= "<tr>";
-    $datas .= "<td>" . $request['titleRequest'] . "</td>";
-    $datas .= "<td><div style='max-height:20vh;overflow:auto;'>" . $request['descriptionRequest'] . "</div></td>";
-    $datas .= "<td>" . $request['datetimeRequest'] . "</td>";
-    $datas .= "<td>" . $userOpen['lastName'] . " " . $userOpen['firstName'] . " - " . $userOpen['email'] . "</td>";
+    $datas .= "<td class=\"align-middle\">" . $request['titleRequest'] . "</td>";
+    $datas .= "<td class=\"align-middle\"><div style='max-height:20vh;overflow:auto;'>" . $request['descriptionRequest'] . "</div></td>";
+    $datas .= "<td class=\"align-middle\">" . $request['datetimeRequest'] . "</td>";
+    $datas .= "<td class=\"align-middle\">" . $userOpen['lastName'] . " " . $userOpen['firstName'] . " - " . $userOpen['email'] . "</td>";
     if (is_numeric($request['idUserTo'])) {
-        $datas .= "<td>" . $userHandling['lastName'] . " " . $userHandling['firstName'] . " - " . $userHandling['email'] . "</td>";
+        $datas .= "<td class=\"align-middle\">" . $userHandling['lastName'] . " " . $userHandling['firstName'] . " - " . $userHandling['email'] . "</td>";
     } else {
-        $datas .= "<td>" . $userHandling . "</td>";
+        $datas .= "<td class=\"align-middle\">" . $userHandling . "</td>";
     }
-    $datas .= "<td class='" . $emergencyLevelColors[$request['levelRequest']] . "'>" . $emergencyLevel[$request['levelRequest']] . "</td>";
-    $datas .= "<td>" . $status[$request['statusRequest']] . "</td>";
-    $datas .= "<td><a href='?action=requestDetails&idRequest=" . $request['idRequest'] . "'><button class='btn btn-success'>Voir les détails</button></a>";
+    $datas .= "<td class='" . $emergencyLevelColors[$request['levelRequest']] . " align-middle'>" . $emergencyLevel[$request['levelRequest']] . "</td>";
+    $datas .= "<td class=\"align-middle\">" . $status[$request['statusRequest']] . "</td>";
+    $datas .= "<td class=\"align-middle\"><a href='?action=requestDetails&idRequest=" . $request['idRequest'] . "'><button class='btn btn-success'>Voir les détails</button></a>";
     $datas .= "</tr>";
 }

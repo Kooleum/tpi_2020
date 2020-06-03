@@ -14,6 +14,7 @@ if (!isset($_SESSION['id'])) {
 }
 
 $idRequest = filter_input(INPUT_GET, "idRequest", FILTER_SANITIZE_NUMBER_INT);
+$errorM = filter_input(INPUT_GET, "error", FILTER_SANITIZE_STRING);
 
 $statusT = ["waiting" => "En attente de traitement", "handling" => "Traitement en cours", "done" => "Terminé"];
 $statusTR = ["waiting" => "En attente de traitement", "progress" => "Traitement en cours", "completed" => "Terminé", "canceled" => "Annulée"];
@@ -31,13 +32,22 @@ if (!is_numeric($idRequest)) {
 $error = "";
 $buttons = "";
 $createTaskButton = "";
+$confirmRemove = "";
+$mailBox = "";
 
 $request = getRequestById($idRequest);
 
 //leaving page if request does not exist
-if (empty($request)) {
+if (!$request) {
     header("Location: ?action=viewMyRequests");
     exit();
+}
+
+$requestCreator = getUserInfoFromId($request['idUserFrom']);
+$nameReciver = $requestCreator['email'];
+
+if ($errorM) {
+    $error = "<div class='alert alert-danger'>Une erreure est survenue</div>";
 }
 
 $locationRequest = "Non applicable";
@@ -46,14 +56,18 @@ if ($request['idLocation']) {
     $location = getLocationById($request['idLocation']);
     $locationRequest = $location['building'] . " - " . $location['room'];
 }
-
-
+$lastMail = $request['dateLastEmail'];
+if($request['dateLastEmail'] == null){
+    $lastMail = "jamais";
+}
 
 $titleRequest = $request['titleRequest'];
 $descriptionRequest = $request['descriptionRequest'];
 $type = $typeT[$request['typeRequest']];
 $emergency = "<span class='text-" . $emergencyLevelColors[$request['levelRequest']] . "'>" . $emergencyLevelT[$request['levelRequest']] . "</span>";
+
 if ($request['idUserTo'] == $_SESSION['id'] && $_SESSION['id'] != null) {
+
     if ($request['statusRequest'] == "waiting") {
         $buttons = "<button class='btn btn-secondary text-light active mx-1 my-1'>En attente</button>";
     } else {
@@ -69,11 +83,15 @@ if ($request['idUserTo'] == $_SESSION['id'] && $_SESSION['id'] != null) {
     } else {
         $buttons .= "<a href='?action=changeRequestStatus&idRequest=" . $idRequest . "&newStatus=done'><button class='btn btn-success mx-1 my-1'>Terminée</button></a>";
     }
-    $buttons .= "<a href='?action=changeRequestStatus&idRequest=" . $idRequest . "&newStatus=sendEmail'><button class='btn btn-info mx-1 my-1'>Envoyer un mail</button></a>";
-    $buttons .= "<button class='btn btn-danger float-md-right mx-1 my-1' onclick='confirm()'>Supprimer</button>";
+    $buttons .= "<button class='btn btn-info mx-1 my-1' onclick=\"confirm('Mail')\">Envoyer un mail</button><small>Dernier mail envoyé : $lastMail </small>";
+    $buttons .= "<button class='btn btn-danger float-md-right mx-1 my-1' onclick=\"confirm('Remove')\">Supprimer</button>";
     $buttons .= "<a href='?action=editRequest&idRequest=" . $idRequest . "'><button class='btn btn-outline-primary float-md-right mx-1 my-1'>Modifier</button></a>";
 
     $createTaskButton = '<a class="float-right" href="?action=createTask&idRequest=' . $idRequest . '>"><button class="btn btn-primary">Ajouter une tâche</button></a>';
+} elseif (!empty($_SESSION['id']) && $request['idUserTo'] == null) {
+
+    $buttons .= "<button class='btn btn-danger float-md-right mx-1 my-1' onclick=\"confirm('Remove')\">Supprimer</button>";
+    $buttons .= "<a href='?action=editRequest&idRequest=" . $idRequest . "'><button class='btn btn-outline-primary float-md-right mx-1 my-1'>Modifier</button></a>";
 }
 
 
@@ -119,3 +137,54 @@ foreach ($rMedias as $m) {
         $medias .= "<a href='?action=viewMedia&idMedia=" . $m['idMedia'] . "&a=view' target='_blank'><div class='maxSize'><img src='files/img/pdfIcon.png' class='pdfPreview'><figcaption>" . $m['originalFileName'] . "</figcaption></div></a>";
     }
 }
+
+
+if ($request['idUserTo'] == $_SESSION['id'] || ($_SESSION['id'] != null && $request['idUserTo'] == null)) {
+
+    $confirmRemove = <<<CONFIRMATION_REMOVE
+    
+    <div class="col-12 align-middle confirmBox" hidden id="confirmBoxRemove">
+    <div class="card text-white bg-warning mb-3">
+    <div class="card-header">
+    <h2 class="text-danger">Attention</h2>
+    </div>
+    <div class="card-body">
+    <h4 class="card-text">Voulez vous vraiment supprimer la demande ?</h4>
+    <h4 class="card-text">Cela supprimera également <u>toutes les tâches associées</u></h4>
+    <h4 class="card-text text-danger">&#9888; Cette action est irreversible !</h4>
+    </div>
+    <div class="card-body">
+    <button onclick="hide('Remove')" class="btn-success btn float-left">Annuler</button>
+    <a href="?action=changeRequestStatus&idRequest=$idRequest&newStatus=remove"><button class="btn btn-danger float-right">Oui, supprimer la demande</button></a>
+    </div>
+    </div>
+    </div>
+    
+    </div>
+    CONFIRMATION_REMOVE;
+}
+
+$mailBox = <<<MAIL_BOX
+    
+    <div class="col-12 align-middle confirmBox" hidden id="confirmBoxMail">
+    <div class="card text-dark bg-white mb-3">
+    <div class="card-header">
+    <h2 class="text-primary">Contenu du mail :</h2>
+    <h5 class="text-info text-left">Destinataire : $nameReciver</h5>
+    </div>
+    <div class="card-body">
+    <form action="?action=sendMail" method="post">
+    <input type="hidden" name="idRequest" value="$idRequest">
+    <textarea class="form-control" rows="8" id="mailText" name="textMail" oninput="textChanged()" placeholder="Bonjour, \r\n\r\n..."></textarea>
+    <input type="submit" name="submit" id="submitButton" hidden>
+    </form>
+    </div>
+    <div class="card-body">
+    <button onclick="hide('Mail')" class="btn-success btn float-left">Annuler</button>
+    <button class="btn btn-primary float-right" id="validationButton" onclick="sendMail()" disabled>Envoyer le mail</button>
+    </div>
+    </div>
+    </div>
+    
+    </div>
+    MAIL_BOX;

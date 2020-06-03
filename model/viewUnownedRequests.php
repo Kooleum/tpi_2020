@@ -19,13 +19,13 @@ foreach($requests as $request){
     $userOpen = getUserInfoFromId($request['idUserFrom']);
 
     $datas.="<tr>";
-    $datas.="<td>".$request['titleRequest']."</td>";
-    $datas.="<td><div style='max-height:20vh;overflow:auto;'>".$request['descriptionRequest']."</div></td>";
-    $datas.="<td>".$request['datetimeRequest']."</td>";
-    $datas.="<td>".$userOpen['lastName']." ".$userOpen['firstName']." - ".$userOpen['email']."</td>";
-    $datas.="<td class='".$emergencyLevelColors[$request['levelRequest']]."'>".$emergencyLevel[$request['levelRequest']]."</td>";
-    $datas.="<td>".$status[$request['statusRequest']]."</td>";
-    $datas.="<td><a href='?action=requestDetails&idRequest=".$request['idRequest']."'><button class='btn btn-success'>Voir les détails</button></a>";
+    $datas.="<td class=\"align-middle\">".$request['titleRequest']."</td>";
+    $datas.="<td class=\"align-middle\"><div style='max-height:20vh;overflow:auto;'>".$request['descriptionRequest']."</div></td>";
+    $datas.="<td class=\"align-middle\">".$request['datetimeRequest']."</td>";
+    $datas.="<td class=\"align-middle\">".$userOpen['lastName']." ".$userOpen['firstName']." - ".$userOpen['email']."</td>";
+    $datas.="<td class=\"align-middle\" class='".$emergencyLevelColors[$request['levelRequest']]."'>".$emergencyLevel[$request['levelRequest']]."</td>";
+    $datas.="<td class=\"align-middle\">".$status[$request['statusRequest']]."</td>";
+    $datas.="<td class=\"align-middle\"><a href='?action=requestDetails&idRequest=".$request['idRequest']."'><button class='btn btn-success'>Voir les détails</button></a>";
     $datas.="<a href='?action=changeRequestManager&idRequest=".$request['idRequest']."'><button class='btn btn-primary mt-md-1'>Assigner</button></a></td>";
     $datas.="</tr>";
 

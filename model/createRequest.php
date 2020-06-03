@@ -27,61 +27,73 @@ if ($submit == "submited") {
     if ($titleRequest && $descriptionRequest && $type && $emergencyLevel && $userFrom) {
         $movedFiles = ['files' => [], 'paths' => []];
         try {
-            $fileError = null;
-            $files = $_FILES["medias"];
+            $totalSize = 0;
+            foreach ($_FILES["medias"]["size"] as $s) $totalSize += $s;
 
-            //if files are uploaded
-            if (!(count($files['name']) == 1 && $files['size'][0] == 0)) {
-                foreach ($files['tmp_name'] as $key => $file) {
-                    $mimeType =  mime_content_type($file);
-                    $fileType = explode("/", $mimeType);
-                    if ($fileType[0] == "image" || $mimeType == "application/pdf") {
-                        //create uniq file name
-                        $newFileName = md5($files['name'][$key] . uniqid() . date('Y-m-d H:i:s')) . "." . $fileType[1];
-                        if (move_uploaded_file($file, "files/" . $fileType[0] . "/" . $newFileName)) {
-                            array_push($movedFiles['files'], ['path' => "files/" . $fileType[0] . "/" . $newFileName, 'originalName' => $files['name'][$key], 'newName' => $newFileName, 'mime' => $mimeType, 'extension' => $fileType[1]]);
-                            array_push($movedFiles['paths'], "files/" . $fileType[0] . "/" . $newFileName);
+            //if files size  is to high
+            if ($totalSize > 70000000) {
+                $error = "<div class='alert alert-success'>La taille totale des fichiers est trop importante</div>";
+            } else {
+                $fileError = null;
+                $files = $_FILES["medias"];
+
+                //if files are uploaded
+                if (!(count($files['name']) == 1 && $files['size'][0] == 0)) {
+                    foreach ($files['tmp_name'] as $key => $file) {
+                        $mimeType =  mime_content_type($file);
+                        $fileType = explode("/", $mimeType);
+                        if ($fileType[0] == "image" || $mimeType == "application/pdf") {
+                            //create uniq file name
+                            $newFileName = md5($files['name'][$key] . uniqid() . date('Y-m-d H:i:s')) . "." . $fileType[1];
+                            if (move_uploaded_file($file, "files/" . $fileType[0] . "/" . $newFileName)) {
+                                array_push($movedFiles['files'], ['path' => "files/" . $fileType[0] . "/" . $newFileName, 'originalName' => $files['name'][$key], 'newName' => $newFileName, 'mime' => $mimeType, 'extension' => $fileType[1]]);
+                                array_push($movedFiles['paths'], "files/" . $fileType[0] . "/" . $newFileName);
+                            } else {
+                                $fileError = "error";
+                                break;
+                            }
                         } else {
-                            $fileError = "error";
+                            $fileError = "incorectType";
                             break;
                         }
-                    } else {
-                        $fileError = "incorectType";
-                        break;
                     }
                 }
-            }
-            //if no errors with files
-            if ($fileError == null) {
-                startTransaction();
-                if (addRequest($titleRequest, $type, $emergencyLevel, $descriptionRequest, $userFrom, $userTo, $location)) {
-                    $idRequest = lasInsertId();
-                    if (is_numeric($idRequest)) {
-                        foreach ($movedFiles['files'] as $key => $file) {
-                            if (!addRequestMedia($idRequest, $file['originalName'], $file['newName'], $file['path'], $file['extension'], $file['mime'])) {
-                                //if an error append during inserting 
-                                throw new Exception("Errer while executing sql query");
+                //if no errors with files
+                if ($fileError == null) {
+                    startTransaction();
+                    if (addRequest($titleRequest, $type, $emergencyLevel, $descriptionRequest, $userFrom, $userTo, $location)) {
+                        $idRequest = lasInsertId();
+                        if (is_numeric($idRequest)) {
+                            foreach ($movedFiles['files'] as $key => $file) {
+                                if (!addRequestMedia($idRequest, $file['originalName'], $file['newName'], $file['path'], $file['extension'], $file['mime'])) {
+                                    //if an error append during inserting 
+                                    throw new Exception("Errer while executing sql query");
+                                }
                             }
+                        } else {
+                            //if an error append during inserting 
+                            throw new Exception("Errer while executing sql query");
                         }
                     } else {
                         //if an error append during inserting 
                         throw new Exception("Errer while executing sql query");
                     }
+                    commitTransaction();
+
+
+                    include "model/mailer.php";
+
+                    $error = "<div class='alert alert-success'>La demande à été soumise</div>";
                 } else {
-                    //if an error append during inserting 
-                    throw new Exception("Errer while executing sql query");
-                }
-                commitTransaction();
-                $error = "<div class='alert alert-success'>La demande à été soumise</div>";
-            } else {
-                //generic error
-                $error = "<div class='alert alert-danger'>Erreur au niveau du traitement de fichier</div>";
-                //specific errror
-                if ($fileError == "incorectType") {
-                    $error = "<div class='alert alert-danger'>Un ou plusieurs de vos fichier sont d'un type n'étant pas pris en charge</div>";
-                }
-                foreach ($movedFiles['paths'] as $file) {
-                    unlink($file);
+                    //generic error
+                    $error = "<div class='alert alert-danger'>Erreur au niveau du traitement de fichier</div>";
+                    //specific errror
+                    if ($fileError == "incorectType") {
+                        $error = "<div class='alert alert-danger'>Un ou plusieurs de vos fichier sont d'un type n'étant pas pris en charge</div>";
+                    }
+                    foreach ($movedFiles['paths'] as $file) {
+                        unlink($file);
+                    }
                 }
             }
         } catch (Exception $e) {
@@ -127,7 +139,7 @@ function getUsersOption()
 
     foreach ($users as $user) {
         $name = $user['lastName'] . " " . $user['firstName'] . " - " . $user['email'];
-        $name .= $user['isAdmin']?' (Admin)':'';
+        $name .= $user['isAdmin'] ? ' (Admin)' : '';
         $value = $user['idUser'];
         $options .= "<option value='$value'>$name</option>";
     }

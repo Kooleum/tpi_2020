@@ -23,16 +23,16 @@ foreach ($tasks as $task) {
     $requestTitle = $requestInfo['titleRequest'];
 
     $datas .= "<tr>";
-    $datas .= "<td>" . $requestTitle . "</td>";
-    $datas .= "<td>" . $task['titleTask'] . "</td>";
-    $datas .= "<td>" . $task['datetimeTask'] . "</td>";
+    $datas .= "<td class=\"align-middle\">" . $requestTitle . "</td>";
+    $datas .= "<td class=\"align-middle\">" . $task['titleTask'] . "</td>";
+    $datas .= "<td class=\"align-middle\">" . $task['datetimeTask'] . "</td>";
     if($task['endDateValued'] <= date("Y-m-d")){
-        $datas .= "<td class='bg-danger'>" . $task['endDateValued'] . "</td>";
+        $datas .= "<td class='bg-danger align-middle'>" . $task['endDateValued'] . "</td>";
     }else{
-        $datas .= "<td>" . $task['endDateValued'] . "</td>";
+        $datas .= "<td class=\"align-middle\">" . $task['endDateValued'] . "</td>";
     }
-    $datas .= "<td><div style='max-height:20vh;overflow:auto;'>" . $task['commentTask'] . "</div></td>";
-    $datas .= "<td>" . $status[$task['statusTask']] . "</td>";
-    $datas .= "<td><a href='?action=editTask&idTask=" . $task['idTask'] . "'><button class='btn btn-success'>Modifier</button></a>";
+    $datas .= "<td class=\"align-middle\"><div style='max-height:20vh;overflow:auto;'>" . $task['commentTask'] . "</div></td>";
+    $datas .= "<td class=\"align-middle\">" . $status[$task['statusTask']] . "</td>";
+    $datas .= "<td class=\"align-middle\"><a href='?action=editTask&idTask=" . $task['idTask'] . "'><button class='btn btn-success'>Modifier</button></a>";
     $datas .= "</tr>";
 }

@@ -66,7 +66,7 @@ function commitTransaction()
 function getAllRequests()
 {
     $connexion = getConnexion();
-    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, idUserFrom, idUserTo, idLocation FROM requests");
+    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, dateLastEmail, idUserFrom, idUserTo, idLocation FROM requests");
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -78,7 +78,7 @@ function getAllRequests()
 function getOpenRequests()
 {
     $connexion = getConnexion();
-    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, idUserFrom, idUserTo, idLocation FROM requests WHERE statusRequest != 'done'");
+    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, dateLastEmail, idUserFrom, idUserTo, idLocation FROM requests WHERE statusRequest != 'done'");
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -90,7 +90,7 @@ function getOpenRequests()
 function getCloedRequests()
 {
     $connexion = getConnexion();
-    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, idUserFrom, idUserTo, idLocation FROM requests WHERE statusRequest = 'done'");
+    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, dateLastEmail, idUserFrom, idUserTo, idLocation FROM requests WHERE statusRequest = 'done'");
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -106,9 +106,9 @@ function getRequestByAdminLevelStatus(int $adminId, string $level, string $statu
 {
     $connexion = getConnexion();
     if ($status == "open") {
-        $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, idUserFrom, idUserTo, idLocation FROM requests WHERE idUserTo = :idUser AND levelRequest = :levelR AND statusRequest != 'done'");
+        $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, dateLastEmail, idUserFrom, idUserTo, idLocation FROM requests WHERE idUserTo = :idUser AND levelRequest = :levelR AND statusRequest != 'done'");
     } else {
-        $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, idUserFrom, idUserTo, idLocation FROM requests WHERE idUserTo = :idUser AND levelRequest = :levelR AND statusRequest = 'done'");
+        $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, dateLastEmail, idUserFrom, idUserTo, idLocation FROM requests WHERE idUserTo = :idUser AND levelRequest = :levelR AND statusRequest = 'done'");
     }
     $req->bindParam(":idUser", $adminId, PDO::PARAM_INT);
     $req->bindParam(":levelR", $level, PDO::PARAM_STR);
@@ -124,7 +124,7 @@ function getRequestByAdminLevelStatus(int $adminId, string $level, string $statu
 function getOpenAdminRequest($adminId)
 {
     $connexion = getConnexion();
-    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, idUserFrom, idUserTo, idLocation FROM requests WHERE statusRequest != 'done' AND idUserTo = :idAdmin");
+    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, dateLastEmail, idUserFrom, idUserTo, idLocation FROM requests WHERE statusRequest != 'done' AND idUserTo = :idAdmin");
     $req->bindParam(":idAdmin", $adminId, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC);
@@ -137,7 +137,7 @@ function getOpenAdminRequest($adminId)
 function getOpenUnownedRequest()
 {
     $connexion = getConnexion();
-    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, idUserFrom, idUserTo, idLocation FROM requests WHERE statusRequest != 'done' AND idUserTo is null");
+    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, dateLastEmail, idUserFrom, idUserTo, idLocation FROM requests WHERE statusRequest != 'done' AND idUserTo is null");
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -178,10 +178,30 @@ function getRequestTasks($idRequest)
 function getRequestById($idRequest)
 {
     $connexion = getConnexion();
-    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, idUserFrom, idUserTo, idLocation FROM requests WHERE idRequest = :idRequest");
+    $req = $connexion->prepare("SELECT idRequest, titleRequest, datetimeRequest, typeRequest, levelRequest, descriptionRequest, statusRequest, dateLastEmail, idUserFrom, idUserTo, idLocation FROM requests WHERE idRequest = :idRequest");
     $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
     $req->execute();
-    return $req->fetchAll(PDO::FETCH_ASSOC)[0];
+    $datas = $req->fetchAll(PDO::FETCH_ASSOC);
+    if (count($datas) > 0) {
+        return $datas[0];
+    }
+    return false;
+}
+
+/**
+ * Change las maile date 
+ * @param int id of the request
+ * @return array All the tasks of the given requests
+ */
+function updateLastMail($idRequest)
+{
+    $date = date("Y-m-d H:i:s");
+
+    $connexion = getConnexion();
+    $req = $connexion->prepare("UPDATE requests SET dateLastEmail = :dateEmail WHERE idRequest = :idRequest");
+    $req->bindParam(":dateEmail", $date, PDO::PARAM_STR);
+    $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
+    return $req->execute();
 }
 
 /**
@@ -692,6 +712,24 @@ function addRequestMedia(int $idRequest, string $originalName, string $newName, 
         $req->bindParam(":idRequest", $idRequest, PDO::PARAM_INT);
         $req->execute();
         return true;
+    } catch (Exception $e) {
+        return false;
+    }
+    return false;
+}
+
+/**
+ * remove a media
+ * @param int id media
+ * @return bool query status
+ */
+function removeMedia(int $idMedia)
+{
+    try {
+        $connexion = getConnexion();
+        $req = $connexion->prepare("DELETE FROM medias WHERE idMedia = :idMedia");
+        $req->bindParam(":idMedia", $idMedia, PDO::PARAM_INT);
+        $req->execute();
     } catch (Exception $e) {
         return false;
     }

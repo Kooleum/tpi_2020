@@ -31,19 +31,19 @@
         <?= $error ?>
         <form action="#" method="post" enctype="multipart/form-data">
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="titleRequest">Titre de la demande</label>
+                <label class="col-sm-2 col-form-label" for="titleRequest">Titre de la demande <span class="text-danger">*</span></label>
                 <div class="col-sm-10">
                     <input type="text" name="titleRequest" id="titleRequest" class="form-control" required />
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="titleRequest">Description détalilée de la demande</label>
+                <label class="col-sm-2 col-form-label" for="titleRequest">Description détaillée de la demande <span class="text-danger">*</span></label>
                 <div class="col-sm-10">
                     <textarea name="descriptionRequest" id="descriptionRequest" class="form-control"></textarea>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="type">Type de demande</label>
+                <label class="col-sm-2 col-form-label" for="type">Type de demande <span class="text-danger">*</span></label>
                 <div class="col-sm-10">
                     <select id="type" class="form-control" name="type" required>
                         <option value="hardware">Hardware</option>
@@ -53,10 +53,10 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="emergencyLevel">Niveau d'urgence</label>
+                <label class="col-sm-2 col-form-label" for="emergencyLevel">Niveau d'urgence <span class="text-danger">*</span></label>
                 <div class="col-sm-10">
                     <select id="emergencyLevel" class="form-control" name="emergencyLevel" required>
-                        <option value="low">Failbe</option>
+                        <option value="low">Faible</option>
                         <option value="medium">moyen</option>
                         <option value="high">Haut</option>
                     </select>
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="userFrom">Demande de</label>
+                <label class="col-sm-2 col-form-label" for="userFrom" >Demande de <span class="text-danger">*</span></label>
                 <div class="col-sm-10">
                     <select id="userFrom" class="form-control" name="userFrom" required>
                         <option></option>
@@ -91,7 +91,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="medias">Medias <small class="text-info"><b>(image ou pdf)</b></small></label>
+                <label class="col-sm-2 col-form-label" for="medias">Medias <small class="text-info"><b>(image ou pdf)</b></small> <small class="text-warning"><b>(Max 70 Mo)</b></small></label>
                 <div class="col-sm-10">
                     <input type="file" id="medias" name="medias[]" accept="image/*, application/pdf" multiple class="form-control-file">
                 </div>
