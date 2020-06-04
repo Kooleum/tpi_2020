@@ -14,6 +14,8 @@ $status = ["waiting" => "En attente de traitement", "handling" => "Traitement en
 $emergencyLevel = ["low" => "Faible", "medium" => "Modéré", "high" => "Haut"];
 
 $datas = "";
+
+//displaying datas on table
 foreach ($requests as $request) {
     $userOpen = getUserInfoFromId($request['idUserFrom']);
     if (is_numeric($request['idUserTo'])) {
@@ -21,7 +23,6 @@ foreach ($requests as $request) {
     } else {
         $userHandling = "Aucun administrateur assigné";
     }
-
 
     $datas .= "<tr>";
     $datas .= "<td class=\"align-middle\">" . $request['titleRequest'] . "</td>";

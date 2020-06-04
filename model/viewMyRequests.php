@@ -15,6 +15,7 @@ $emergencyLevel = ["low"=>"Faible", "medium"=>"Modéré", "high"=>"Haut"];
 $emergencyLevelColors = ["low"=>"", "medium"=>"bg-warning", "high"=>"bg-danger"];
 
 $datas = "";
+//displaying datas on table
 foreach($requests as $request){
     $userOpen = getUserInfoFromId($request['idUserFrom']);
 

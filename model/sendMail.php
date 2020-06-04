@@ -20,7 +20,10 @@ require_once("model/mailIdentifiers.php");
 
 $idRequest = filter_input(INPUT_POST, "idRequest", FILTER_SANITIZE_NUMBER_INT);
 $textMail = filter_input(INPUT_POST, "textMail", FILTER_SANITIZE_STRING);
+$textMail .= "\r\n\r\n Veuillez ne pas répondre à cet email";
+// $textMail = utf8_encode($textMail);
 $htmlText = str_replace("\r\n", "<br>", $textMail);
+// $htmlText = utf8_encode($htmlText);
 
 $requestInfos = getRequestById($idRequest);
 $userInfo = getUserInfoFromId($requestInfos['idUserFrom']);
@@ -29,21 +32,20 @@ $error = "";
 
 $mail = new PHPMailer(true);
 
-updateLastMail($idRequest);
 
 //Using PHPMailer lib
 try {
     //Server settings
-    //   $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
-    $mail->isSMTP();                                            // Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-    $mail->Username   = MAIL_ADRESS;                     // SMTP username
-    $mail->Password   = MAIL_PASSWORD;                               // SMTP password
-    $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-    $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-    $mail->charSet    = 'UTF-8';
+    $mail->isSMTP();                                        // Send using SMTP
+    $mail->Host       = 'smtp.gmail.com';                   // Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                               // Enable SMTP authentication
+    $mail->Username   = MAIL_ADRESS;                        // SMTP username
+    $mail->Password   = MAIL_PASSWORD;                      // SMTP password
+    $mail->SMTPSecure = 'tsl';                              // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+    $mail->Port       = 587;                                // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+    $mail->charSet    = 'utf-8';                            // Encoding mail in utf8
     $mail->Encoding   = 'base64';
+    $mail->setLanguage('fr');
 
     //Recipients
     $mail->setFrom(MAIL_ADRESS, 'Mailer');
@@ -52,15 +54,16 @@ try {
     // Content
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'Suivis de demande : ' . $requestInfos['titleRequest'];
-    $mail->Body    = $htmlText;
-    $mail->AltBody = $textMail;
+    $mail->Body    = $htmlText;                             // html text
+    $mail->AltBody = $textMail;                             // if mail browser does not support html mails
 
     $mail->send();
-    echo 'Message has been sent';
 
-    header("Location: ?action=requestDetails&idRequest=".$idRequest);
+    updateLastMail($idRequest);
+    header("Location: ?action=requestDetails&idRequest=" . $idRequest); //if everything ok go back to page
     exit();
-
 } catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    echo $mail->ErrorInfo;
+    // header("Location: ?action=requestDetails&error=error&idRequest=".$idRequest); // if an error occure go back and display error message
+    exit();
 }

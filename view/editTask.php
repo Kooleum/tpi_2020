@@ -28,7 +28,7 @@
     require_once 'nav.php';
     ?>
     <div class="container">
-        <h2>Créer une tâche</h2>
+        <h2>Modifier une tâche</h2>
         <?= $error ?>
         <div class="col-lg-6 mx-auto mt-2">
             <form class="" action="#" method="POST">

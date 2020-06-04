@@ -34,7 +34,7 @@
                 <div class="col-md-10 my-2">
                     <div class="card text-white bg-dark border-danger">
                         <div class="card-header">
-                            <h4>Demandes non assignées</h4>
+                            <h4>Demande<?= $unownedRequests > 1 ? 's' : '' ?> non assignée<?= $unownedRequests > 1 ? 's' : '' ?></h4>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text"><?= $unownedRequests ?></h3>
@@ -44,7 +44,7 @@
                 <div class="col-lg-3 col-md-10 my-2">
                     <div class="card text-white bg-dark border-danger">
                         <div class="card-header">
-                            <h4>Demandes urgentes ouvertes</h4>
+                            <h4>Demande<?= $emergencyOpen > 1 ? 's' : '' ?> urgente<?= $emergencyOpen > 1 ? 's' : '' ?> ouverte<?= $emergencyOpen > 1 ? 's' : '' ?></h4>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text"><?= $emergencyOpen ?></h3>
@@ -54,7 +54,7 @@
                 <div class=" col-lg-3 col-md-5 ml-md-3 my-2">
                     <div class="card text-white bg-dark border-warning">
                         <div class="card-header">
-                            <h4>Demandes modérées ouvertes</h4>
+                            <h4>Demande<?= $meduimOpen > 1 ? 's' : '' ?> modérée<?= $meduimOpen > 1 ? 's' : '' ?> ouverte<?= $meduimOpen > 1 ? 's' : '' ?></h4>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text"><?= $meduimOpen ?></h3>
@@ -64,7 +64,7 @@
                 <div class="col-lg-3 col-md-5 ml-md-3 my-2">
                     <div class="card text-white bg-dark border-success">
                         <div class="card-header">
-                            <h4>Demandes faibles ouvertes</h4>
+                            <h4>Demande<?= $lowOpen > 1 ? 's' : '' ?> faible<?= $lowOpen > 1 ? 's' : '' ?> ouverte<?= $lowOpen > 1 ? 's' : '' ?></h4>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text"><?= $lowOpen ?></h3>
@@ -77,7 +77,7 @@
                 <div class=" col-md-10 my-2">
                     <div class="card text-white bg-dark border-danger">
                         <div class="card-header">
-                            <h4>Tâches en retard</h4>
+                            <h4>Tâche<?= $lateTasks > 1 ? 's' : '' ?> en retard</h4>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text"><?= $lateTasks ?></h3>
@@ -87,7 +87,7 @@
                 <div class="col-md-5 my-2">
                     <div class="card text-white bg-dark border-warning">
                         <div class="card-header">
-                            <h4>Tâches ouvertes</h4>
+                            <h4>Tâche<?= $openTasks > 1 ? 's' : '' ?> ouverte<?= $openTasks > 1 ? 's' : '' ?></h4>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text"><?= $openTasks ?></h3>
@@ -97,7 +97,7 @@
                 <div class=" col-md-5 ml-md-3 my-2">
                     <div class="card text-white bg-dark border-success">
                         <div class="card-header">
-                            <h4>Tâches closes</h4>
+                            <h4>Tâche<?= $closedTasks > 1 ? 's' : '' ?> close<?= $closedTasks > 1 ? 's' : '' ?></h4>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text"><?= $closedTasks ?></h3>
@@ -110,7 +110,7 @@
                 <div class="col-lg-3 my-2">
                     <div class="card text-white bg-dark border-grey">
                         <div class="card-header">
-                            <h4>Demandes urgentes</h4>
+                            <h4>Demande<?= $emergencyClosed > 1 ? 's' : '' ?> urgente<?= $emergencyClosed > 1 ? 's' : '' ?></h4>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text"><?= $emergencyClosed ?></h3>
@@ -120,7 +120,7 @@
                 <div class="col-lg-3 ml-md-3 my-2">
                     <div class="card text-white bg-dark border-grey">
                         <div class="card-header">
-                            <h4>Demandes modérées</h4>
+                            <h4>Demande<?= $meduimClosed > 1 ? 's' : '' ?> modérée<?= $meduimClosed > 1 ? 's' : '' ?></h4>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text"><?= $meduimClosed ?></h3>
@@ -130,7 +130,7 @@
                 <div class="col-lg-3 ml-md-3 my-2">
                     <div class="card text-white bg-dark border-grey">
                         <div class="card-header">
-                            <h4>Demandes faibles</h4>
+                            <h4>Demande<?= $meduimClosed > 1 ? 's' : '' ?> faible<?= $meduimClosed > 1 ? 's' : '' ?></h4>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text"><?= $lowClosed ?></h3>

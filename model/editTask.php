@@ -22,7 +22,7 @@ $managedBy = filter_input(INPUT_POST, "managedBy", FILTER_SANITIZE_NUMBER_INT);
 $statusTask = filter_input(INPUT_POST, "statusTask", FILTER_SANITIZE_STRING);
 $endDateValued = filter_input(INPUT_POST, "endDateValued", FILTER_SANITIZE_STRING);
 
-//if a no request is specified going back to tasks list 
+//if no request is specified going back to tasks list 
 if (!is_numeric($idTask) && !is_numeric($idTaskSubmited)) {
     header("Location: ?action=openTasks");
     exit();
@@ -30,7 +30,7 @@ if (!is_numeric($idTask) && !is_numeric($idTaskSubmited)) {
 
 $taskValues = getTaskById($idTask);
 
-//if a editor is not owner leave page
+//if editor is not owner leave page
 if ($taskValues['managedBy']!=$_SESSION['id']) {
     header("Location: ?action=openTasks");
     exit();

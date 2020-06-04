@@ -17,6 +17,7 @@ $emergencyLevel = ["low" => "Faible", "medium" => "Modéré", "high" => "Haut"];
 $emergencyLevelColors = ["low" => "bg-success", "medium" => "bg-warning", "high" => "bg-danger"];
 
 $datas = "";
+//displaying tasks in table
 foreach ($tasks as $task) {
     $requestInfo = getRequestById($task['idRequest']);
 

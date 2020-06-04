@@ -98,13 +98,12 @@ if ($submit == "submited") {
             }
         } catch (Exception $e) {
             $error = "<div class='alert alert-danger'>Une erreure est survenue</div>";
-
+            rollBackTransaction();
             foreach ($movedFiles['paths'] as $file) {
                 unlink($file);
             }
         }
     } else {
-        rollBackTransaction();
         $error = "<div class='alert alert-danger'>Un ou plusieurs champs obligatoires n'ont pas été renseignés</div>";
     }
 }

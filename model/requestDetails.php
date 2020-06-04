@@ -52,10 +52,13 @@ if ($errorM) {
 
 $locationRequest = "Non applicable";
 
+//showing request location if specified 
 if ($request['idLocation']) {
     $location = getLocationById($request['idLocation']);
     $locationRequest = $location['building'] . " - " . $location['room'];
 }
+
+//if email has benn sent showing last send datetime
 $lastMail = $request['dateLastEmail'];
 if($request['dateLastEmail'] == null){
     $lastMail = "jamais";
@@ -66,6 +69,7 @@ $descriptionRequest = $request['descriptionRequest'];
 $type = $typeT[$request['typeRequest']];
 $emergency = "<span class='text-" . $emergencyLevelColors[$request['levelRequest']] . "'>" . $emergencyLevelT[$request['levelRequest']] . "</span>";
 
+//displaying action buttons if auth user if owner of request
 if ($request['idUserTo'] == $_SESSION['id'] && $_SESSION['id'] != null) {
 
     if ($request['statusRequest'] == "waiting") {
@@ -89,7 +93,7 @@ if ($request['idUserTo'] == $_SESSION['id'] && $_SESSION['id'] != null) {
 
     $createTaskButton = '<a class="float-right" href="?action=createTask&idRequest=' . $idRequest . '>"><button class="btn btn-primary">Ajouter une tâche</button></a>';
 } elseif (!empty($_SESSION['id']) && $request['idUserTo'] == null) {
-
+    //displaying remove and edit button if owner is set to null and user is logged
     $buttons .= "<button class='btn btn-danger float-md-right mx-1 my-1' onclick=\"confirm('Remove')\">Supprimer</button>";
     $buttons .= "<a href='?action=editRequest&idRequest=" . $idRequest . "'><button class='btn btn-outline-primary float-md-right mx-1 my-1'>Modifier</button></a>";
 }
@@ -100,7 +104,7 @@ $tasksTable = "";
 
 $tasks = getRequestTasks($idRequest);
 
-// if (!$_SESSION['id'] == null) {
+//creating table for tasks
 foreach ($tasks as $task) {
     $owner = getUserInfoFromId($task['managedBy']);
 
@@ -121,7 +125,7 @@ foreach ($tasks as $task) {
     }
     $tasksTable .= "</tr>";
 }
-// }
+
 $medias = "Aucun média";
 
 $rMedias = getRequestMedias($idRequest);
@@ -129,6 +133,7 @@ $rMedias = getRequestMedias($idRequest);
 if (count($rMedias) > 0) {
     $medias = "";
 }
+//adding medias display
 foreach ($rMedias as $m) {
     $typeM = explode('/', $m['mime']);
     if ($typeM[0] == 'image') {
@@ -137,6 +142,8 @@ foreach ($rMedias as $m) {
         $medias .= "<a href='?action=viewMedia&idMedia=" . $m['idMedia'] . "&a=view' target='_blank'><div class='maxSize'><img src='files/img/pdfIcon.png' class='pdfPreview'><figcaption>" . $m['originalFileName'] . "</figcaption></div></a>";
     }
 }
+
+//box for deletion confirmation 
 
 
 if ($request['idUserTo'] == $_SESSION['id'] || ($_SESSION['id'] != null && $request['idUserTo'] == null)) {
@@ -164,6 +171,7 @@ if ($request['idUserTo'] == $_SESSION['id'] || ($_SESSION['id'] != null && $requ
     CONFIRMATION_REMOVE;
 }
 
+//box for mail writing
 $mailBox = <<<MAIL_BOX
     
     <div class="col-12 align-middle confirmBox" hidden id="confirmBoxMail">

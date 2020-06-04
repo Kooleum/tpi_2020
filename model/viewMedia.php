@@ -17,6 +17,7 @@ $error = "";
 $media = getMediaById($idMedia);
 $fileName = $media['originalFileName'];
 
+//displaying medias on spoecific page
 if($a="view"){
     if ($media['mime'] == "application/pdf") {
         header('Cache-Control: public');
@@ -31,8 +32,5 @@ if($a="view"){
         header('Content-Length: ' . filesize($media['pathMedia']));
         readfile($media['pathMedia']);
     }
-}else{
-    //Download script
-    echo "<script>window.close();</script>";
 }
     

@@ -33,13 +33,13 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="titleRequest">Titre de la demande <span class="text-danger">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" name="titleRequest" id="titleRequest" class="form-control" required />
+                    <input type="text" name="titleRequest" id="titleRequest" class="form-control" required value="<?= $descriptionRequest ?>" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="titleRequest">Description détaillée de la demande <span class="text-danger">*</span></label>
                 <div class="col-sm-10">
-                    <textarea name="descriptionRequest" id="descriptionRequest" class="form-control"></textarea>
+                    <textarea name="descriptionRequest" id="descriptionRequest" class="form-control"><?= $descriptionRequest ?></textarea>
                 </div>
             </div>
             <div class="form-group row">

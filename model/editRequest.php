@@ -48,6 +48,7 @@ if ($submit == "submited" || is_numeric($requestId)) {
             $error = "<div class='alert alert-danger'>Un ou plusieurs champs obligatoires n'ont pas été renseignés</div>";
         }
     } else {
+        // fill form with existing datas
         $titleRequest = $request['titleRequest'];
         $descriptionRequest = $request['descriptionRequest'];
         $type =  $request['typeRequest'];

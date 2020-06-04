@@ -33,10 +33,12 @@ if ($request['idUserTo'] != $_SESSION['id']) {
     exit();
 }
 
+//checking request id
 if (is_numeric($idRequestSubmited)) {
     if (!empty($titleTask) && !empty($commentTask) && !empty($managedBy) && !empty($statusTask) && !empty($endDateValued)) {
         try {
             startTransaction();
+            //adding task to request
             if (!addTask($titleTask, $commentTask, $endDateValued, $managedBy, $statusTask, $idRequestSubmited)) {
                 //if an error append during inserting 
                 throw new Exception("Errer while executing sql query");

@@ -33,7 +33,9 @@ $permission = [
         "faq" => "faq",
     ],
     "Admin" => [
+        "index" => "dashboard",
         "default" => "dashboard",
+        "dashboard" => "dashboard",
         "openTasks" => "openTasks",
         "viewOpenRequests" => "viewOpenAdminRequests",
         "viewClosedRequests" => "viewClosedRequests",

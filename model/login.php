@@ -18,7 +18,7 @@ $error = "";
 if ($submited == "submited") {
     if (!empty($email) && !empty($password)) {
         $realPassword = getPassword($email);
-        //verify user password and if he is admin
+        //verify user password and if he is admin if not admin cancel login with error message
         if (password_verify($password, $realPassword)){
             $userInfo = getUserInfoFromEmail($email);
             $_SESSION['log']=true;
