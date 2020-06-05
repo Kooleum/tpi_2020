@@ -22,44 +22,55 @@ $userTo = filter_input(INPUT_POST, "userTo", FILTER_SANITIZE_STRING);
 $location = filter_input(INPUT_POST, "location", FILTER_SANITIZE_STRING);
 $submit = filter_input(INPUT_POST, "submit", FILTER_SANITIZE_STRING);
 
-
-
-if ($submit == "submited" || is_numeric($requestId)) {
-
-    $request = getRequestById($requestId);
-
-    //if the from as been submited inserting given datas in database with erro handing and 
-    if ($submit == "submited") {
-        if ($titleRequest && $descriptionRequest && $type && $emergencyLevel && $userTo) {
-            try {
-                startTransaction();
-                if (!updateRequest($requestId, $titleRequest, $type, $emergencyLevel, $descriptionRequest, $userTo, $location)) {
-                    //if an error append during inserting 
-                    throw new Exception("Errer while executing sql query");
-                }
-                commitTransaction();
-                header("Location: ?action=viewMyRequests");
-                exit();
-            } catch (Exception $e) {
-                $error = "<div class='alert alert-danger'>Une erreure est survenue</div>";
-            }
-        } else {
-            rollBackTransaction();
-            $error = "<div class='alert alert-danger'>Un ou plusieurs champs obligatoires n'ont pas été renseignés</div>";
-        }
-    } else {
-        // fill form with existing datas
-        $titleRequest = $request['titleRequest'];
-        $descriptionRequest = $request['descriptionRequest'];
-        $type =  $request['typeRequest'];
-        $emergencyLevel =  $request['levelRequest'];
-        $userTo =  $request['idUserTo'];
-        $location =  $request['idLocation'];
-    }
-} else {
+//if a no request is specified going back to request list 
+if (!is_numeric($requestId)) {
     header("Location: ?action=viewMyRequests");
     exit();
 }
+$request = getRequestById($requestId);
+if ($request['idUserTo'] != $_SESSION['id'] && $request['idUserTo'] != null) {
+    header("Location: ?action=requestDetails&idRequest=" . $requestId);
+    exit();
+}
+
+if ($request)
+
+    if ($submit == "submited" || is_numeric($requestId)) {
+
+        $request = getRequestById($requestId);
+
+        //if the from as been submited inserting given datas in database with erro handing and 
+        if ($submit == "submited") {
+            if ($titleRequest && $descriptionRequest && $type && $emergencyLevel && $userTo) {
+                try {
+                    startTransaction();
+                    if (!updateRequest($requestId, $titleRequest, $type, $emergencyLevel, $descriptionRequest, $userTo, $location)) {
+                        //if an error append during inserting 
+                        throw new Exception("Errer while executing sql query");
+                    }
+                    commitTransaction();
+                    header("Location: ?action=requestDetails&idRequest=" . $requestId);
+                    exit();
+                } catch (Exception $e) {
+                    $error = "<div class='alert alert-danger'>Une erreure est survenue</div>";
+                }
+            } else {
+                rollBackTransaction();
+                $error = "<div class='alert alert-danger'>Un ou plusieurs champs obligatoires n'ont pas été renseignés</div>";
+            }
+        } else {
+            // fill form with existing datas
+            $titleRequest = $request['titleRequest'];
+            $descriptionRequest = $request['descriptionRequest'];
+            $type =  $request['typeRequest'];
+            $emergencyLevel =  $request['levelRequest'];
+            $userTo =  $request['idUserTo'];
+            $location =  $request['idLocation'];
+        }
+    } else {
+        header("Location: ?action=viewMyRequests");
+        exit();
+    }
 
 /**
  * Create options for select form with all admins (select options)

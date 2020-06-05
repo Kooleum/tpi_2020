@@ -46,7 +46,7 @@ if (!$request) {
 $requestCreator = getUserInfoFromId($request['idUserFrom']);
 $nameReciver = $requestCreator['email'];
 
-if ($errorM) {
+if ($errorM != "ok" && !empty($errorM)) {
     $error = "<div class='alert alert-danger'>Une erreure est survenue</div>";
 }
 

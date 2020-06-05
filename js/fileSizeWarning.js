@@ -1,4 +1,4 @@
-//Add small image under the textbox to show a preview of the selected images
+//check total file size and display error message if too big
 var loadFile = function(event) {
     document.getElementById('sizeTooBig').hidden = true;
     var totSize = 0;

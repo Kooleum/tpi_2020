@@ -9,7 +9,7 @@
  * @description Support ticket app for CFPT teacher
  */
 
-$idRequest = filter_input(INPUT_GET, "idRequest", FILTER_SANITIZE_NUMBER_INT);
+ $idRequest = filter_input(INPUT_GET, "idRequest", FILTER_SANITIZE_NUMBER_INT);
 $newStatus = filter_input(INPUT_GET, "newStatus", FILTER_SANITIZE_STRING);
 
 $status = ['waiting', 'handling', 'done'];
