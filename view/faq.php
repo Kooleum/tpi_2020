@@ -26,7 +26,7 @@
     require_once 'nav.php';
     ?>
     <div class="container">
-    <h3>FAQ</h3>
+        <h3>FAQ</h3>
         <div class="text-dark text-left">
             <div class="card mt-2">
                 <div class="card-header">
@@ -60,7 +60,34 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Votre demande a peut-être été traitée et donc indiquée comme "Terminée", dans ce cas votre demande se trouve sur la page <a href="?action=viewClosedRequests">demandes résolues</a>.</li>
-                    <li class="list-group-item">Votre demande peut également avoir été supprimée si l'administrateur en charge de celle-ci la trouvait innapropriée</li>
+                    <li class="list-group-item">Votre demande peut également avoir été supprimée si l'administrateur en charge de celle-ci la trouvait innapropriée.</li>
+                </ul>
+            </div>
+            <div class="card mt-2">
+                <div class="card-header">
+                    Puis-je modifier une demande que j'ai postée ? 
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">L'envoi de demande étant libre d'accès et ne nécéssitant pas de connextion, il est impossible de savoir si c'est bien vous qui avez posté une demande c'est pourquoi il n'est pas possible de la modifier.</li>
+                    <li class="list-group-item">Toute fois les administrateur en ont la possibilité, si vous voulez apporter des modification à votre demande informez en l'administrateur qui s'en charge.</li>
+                </ul>
+            </div>
+            <div class="card mt-2">
+                <div class="card-header">
+                    Comment supprimer une demande ?
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">En tant qu'utilisateur il vous est imposible de supprimer une demande une fois envoyée, de plus les demandes sont visibles par tout le monde faite donc attention de ne pas y include d'information sensibles.</li>
+                    <li class="list-group-item">En tant qu'administrateur, il vous suffit d'aller dans les détails d'une demande et de cliquer sur le bouton supprimer, toute fois, vous ne pouvez supprimer que les demandes qui vous sont assigées (pensez également à envoyer un mail avant la suppression pour en informer l'utilisateur)</li>
+                </ul>
+            </div>
+            <div class="card mt-2 ">
+                <div class="card-header">
+                   J'ai du mal à comprendre le tabelau ou la page de détails de demande
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Vous trouverez ci-dessous une image expliquant le tableau des demandes ouvertes.<div class="row"><img class="col-12" src="files/img/requestTable.png" alt="image d'explication du tableau"></div></li>
+                    <li class="list-group-item">Vous trouverez ci-dessous une image expliquant la page de détail d'une demande.<div class="row"><img class="col-12" src="files/img/requestDetails.png" alt="image d'explication du tableau"></div></li>
                 </ul>
             </div>
         </div>

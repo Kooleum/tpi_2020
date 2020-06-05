@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="userFrom" >Demande de <span class="text-danger">*</span></label>
+                <label class="col-sm-2 col-form-label" for="userFrom">Demande de <span class="text-danger">*</span></label>
                 <div class="col-sm-10">
                     <select id="userFrom" class="form-control" name="userFrom" required>
                         <option></option>
@@ -91,9 +91,10 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="medias">Medias <small class="text-info"><b>(image ou pdf)</b></small> <small class="text-warning"><b>(Max 70 Mo)</b></small></label>
+                <label class="col-sm-2 col-form-label" for="medias">Medias <small class="text-info"><b>(image ou pdf)</b></small> <small class="text-warning"><b>(Max 30 Mo)</b></small></label>
                 <div class="col-sm-10">
-                    <input type="file" id="medias" name="medias[]" accept="image/*, application/pdf" multiple class="form-control-file">
+                    <div class='alert alert-danger' hidden id="sizeTooBig">La taille totale des fichiers est trop importante (>30 Mo) votre demande ne seras pas envoyée</div>
+                    <input type="file" id="medias" name="medias[]" onchange="loadFile(event)" accept="image/*, application/pdf" multiple class="form-control-file">
                 </div>
             </div>
 
@@ -101,6 +102,8 @@
         </form>
     </div>
     <?php require_once "footer.html" ?>
+    <script src="js/fileSizeWarning.js"></script>
+
 </body>
 
 </html>

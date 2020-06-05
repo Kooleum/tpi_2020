@@ -40,7 +40,7 @@
                 <div style="max-height:30vh; overflow:auto;" class="card-body text-left">
                     <h3 class="card-title">Emplacement</h3>
                     <p class="card-text p-1"><?= $locationRequest ?></p>
-                    <h3 class="card-title">Description détailllée</h3>
+                    <h3 class="card-title">Description détaillée</h3>
                     <p class="card-text p-1"><?= $descriptionRequest ?></p>
                 </div>
                 <div class="card-body text-left">

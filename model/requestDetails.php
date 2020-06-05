@@ -60,7 +60,7 @@ if ($request['idLocation']) {
 
 //if email has benn sent showing last send datetime
 $lastMail = $request['dateLastEmail'];
-if($request['dateLastEmail'] == null){
+if ($request['dateLastEmail'] == null) {
     $lastMail = "jamais";
 }
 
@@ -195,4 +195,4 @@ $mailBox = <<<MAIL_BOX
     </div>
     
     </div>
-    MAIL_BOX;
+MAIL_BOX;

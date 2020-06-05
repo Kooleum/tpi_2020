@@ -31,8 +31,8 @@ if ($submit == "submited") {
             foreach ($_FILES["medias"]["size"] as $s) $totalSize += $s;
 
             //if files size  is to high
-            if ($totalSize > 70000000) {
-                $error = "<div class='alert alert-success'>La taille totale des fichiers est trop importante</div>";
+            if ($totalSize > 30000000) {
+                $error = "<div class='alert alert-danger'>La taille totale des fichiers est trop importante (>30 Mo)</div>";
             } else {
                 $fileError = null;
                 $files = $_FILES["medias"];
