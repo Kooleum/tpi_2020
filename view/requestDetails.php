@@ -59,7 +59,7 @@
                         <th>Date de création</th>
                         <th>Date de fin estimée</th>
                         <th>Date de fin réelle</th>
-                        <th>Status</th>
+                        <th>Statut</th>
                         <th>Gérée par</th>
                         <th>Actions</th>
                     </tr>
@@ -70,8 +70,8 @@
             </table>
             <?= $confirmRemove ?>
             <?= $mailBox ?>
-    </div>
-    <?php require_once "footer.html" ?>
+        </div>
+        <?php require_once "footer.html" ?>
 </body>
 
 </html>

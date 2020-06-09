@@ -30,14 +30,16 @@
     <div class="container table-responsive">
         <table class="table table-dark">
             <thead>
-                <th scope="col">Titre</th>
-                <th scope="col">Description</th>
-                <th scope="col">Date d'ouverture</th>
-                <th scope="col">Ouverte par</th>
-                <th scope="col">Administrateur en charge</th>
-                <th scope="col">Importance</th>
-                <th scope="col">Status</th>
-                <th scope="col">Détails</th>
+                <tr>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date d'ouverture</th>
+                    <th scope="col">Ouverte par</th>
+                    <th scope="col">Administrateur en charge</th>
+                    <th scope="col">Importance</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Détails</th>
+                </tr>
             </thead>
             <tbody>
                 <?= $datas ?>

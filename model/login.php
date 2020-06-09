@@ -18,6 +18,7 @@ $error = "";
 if ($submited == "submited") {
     if (!empty($email) && !empty($password)) {
         $realPassword = getPassword($email);
+        echo $realPassword;
         //verify user password and if he is admin if not admin cancel login with error message
         if (password_verify($password, $realPassword)){
             $userInfo = getUserInfoFromEmail($email);
@@ -30,7 +31,6 @@ if ($submited == "submited") {
             header("Location: ?action=index");
             exit();
         }else{
-            echo "false";
             $error = "<div class='alert alert-danger'>L'email ou le mot de passe est invalide ou l'email n'est pas associé à un compte admin</div>";
         }
     }else{

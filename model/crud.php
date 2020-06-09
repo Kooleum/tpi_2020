@@ -9,7 +9,7 @@
  * @description Support ticket app for CFPT teacher
  */
 
-require 'model/dbIdentifiers.php';
+require 'config/dbIdentifiers.php';
 
 /**
  * create the connection to the database
@@ -25,6 +25,7 @@ function getConnexion()
             $db = new PDO($connexionString, DB_USER, DB_PASS);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
+            return false;
             die('Erreur : ' . $e->getMessage());
         }
     }
@@ -56,6 +57,31 @@ function commitTransaction()
     getConnexion()->commit();
 }
 
+//used by installation script
+/**
+ * create an admin on website creation
+ * @param string admin lastName
+ * @param string admin firstName
+ * @param string admin email
+ * @param string admin password
+ * @return bool query state
+ */
+function createAdmin(string $lastname, string $firstname, string $email, string $password)
+{
+    try {
+        $connexion = getConnexion();
+        $req = $connexion->prepare("INSERT INTO `users`(`lastName`, `firstName`, `email`, `password`, `isAdmin`) VALUES (:lastName, :firstName, :email, :password, 1 )");
+        $req->bindParam(":lastName", $lastname, PDO::PARAM_STR);
+        $req->bindParam(":firstName", $firstname, PDO::PARAM_STR);
+        $req->bindParam(":email", $email, PDO::PARAM_STR);
+        $req->bindParam(":password", $password, PDO::PARAM_STR);
+        $req->execute();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+    return false;
+}
 
 //Requests functions
 
@@ -387,7 +413,7 @@ function getPassword(string $email)
 {
     $connexion = getConnexion();
     $req = $connexion->prepare("SELECT `password` FROM users WHERE isAdmin = 1 AND email = :email");
-    $req->bindParam(":email", $email, PDO::PARAM_INT);
+    $req->bindParam(":email", $email, PDO::PARAM_STR);
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC)[0]['password'];
 }
@@ -684,7 +710,6 @@ function getMediaById(int $idMedia)
     $req->execute();
     return $req->fetchAll(PDO::FETCH_ASSOC)[0];
 }
-
 
 /**
  * insert media for request

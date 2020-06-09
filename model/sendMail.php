@@ -16,7 +16,7 @@ require 'PHPMailer-6.1.6/src/Exception.php';
 require 'PHPMailer-6.1.6/src/PHPMailer.php';
 require 'PHPMailer-6.1.6/src/SMTP.php';
 
-require_once("model/mailIdentifiers.php");
+require_once("config/mailIdentifiers.php");
 
 $idRequest = filter_input(INPUT_POST, "idRequest", FILTER_SANITIZE_NUMBER_INT);
 $textMail = filter_input(INPUT_POST, "textMail", FILTER_SANITIZE_STRING);

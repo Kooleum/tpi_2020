@@ -16,16 +16,14 @@ require 'PHPMailer-6.1.6/src/Exception.php';
 require 'PHPMailer-6.1.6/src/PHPMailer.php';
 require 'PHPMailer-6.1.6/src/SMTP.php';
 
-require_once("model/mailIdentifiers.php");
+require_once("config/mailIdentifiers.php");
 
 $emergencyLevelT = ["low" => "Faible", "medium" => "Modérée", "high" => "Haute"];
 $typeT = ["hardware" => "Matériel", "software" => "Logiciel", "other" => "Autre"];
 
 $userInfoFrom = getUserInfoFromId($userFrom);
 
-var_dump($userInfoFrom);
-
-$baseText = "Une nouvelle demande à été crée :\r\n Importance : " . $emergencyLevelT[$emergencyLevel] . "\r\n Du type : " . $typeT[$type] . "\r\nDemande de : " . $userInfoFrom['lastName'] . " " . $userInfoFrom['firstName'] . " - " . $userInfoFrom['email']."\r\n\r\n";
+$baseText = "Une nouvelle demande à été crée :\r\n Importance : " . $emergencyLevelT[$emergencyLevel] . "\r\n Du type : " . $typeT[$type] . "\r\nDemande de : " . $userInfoFrom['lastName'] . " " . $userInfoFrom['firstName'] . " - " . $userInfoFrom['email'] . "\r\n\r\n";
 
 $baseText .= $descriptionRequest;
 $baseText .= "\r\n\r\n Consulter la demande : <a href=\"http://127.0.0.1/tpi/?action=requestDetails&idRequest=$idRequest\">$titleRequest</a>";

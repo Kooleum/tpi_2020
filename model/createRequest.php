@@ -83,7 +83,7 @@ if ($submit == "submited") {
 
                     include "model/mailer.php";
 
-                    $error = "<div class='alert alert-success'>La demande à été soumise</div>";
+                    $error = "<div class='alert alert-success'>La demande a été soumise</div>";
                 } else {
                     //generic error
                     $error = "<div class='alert alert-danger'>Erreur au niveau du traitement de fichier</div>";

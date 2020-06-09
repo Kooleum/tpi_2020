@@ -65,7 +65,7 @@
             </div>
             <div class="card mt-2">
                 <div class="card-header">
-                    Puis-je modifier une demande que j'ai postée ? 
+                    Puis-je modifier une demande que j'ai postée ?
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">L'envoi de demande étant libre d'accès et ne nécéssitant pas de connextion, il est impossible de savoir si c'est bien vous qui avez posté une demande c'est pourquoi il n'est pas possible de la modifier.</li>
@@ -77,17 +77,43 @@
                     Comment supprimer une demande ?
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">En tant qu'utilisateur il vous est imposible de supprimer une demande une fois envoyée, de plus les demandes sont visibles par tout le monde faite donc attention de ne pas y include d'information sensibles.</li>
-                    <li class="list-group-item">En tant qu'administrateur, il vous suffit d'aller dans les détails d'une demande et de cliquer sur le bouton supprimer, toute fois, vous ne pouvez supprimer que les demandes qui vous sont assigées (pensez également à envoyer un mail avant la suppression pour en informer l'utilisateur)</li>
+                    <li class="list-group-item">En tant qu'utilisateur il vous est impossible de supprimer une demande une fois envoyée, de plus les demandes sont visibles par tout le monde. Faites donc attention à ne pas inclure des information sensibles.</li>
+                    <li class="list-group-item">En tant qu'administrateur, il vous suffit d'aller dans les détails d'une demande et de cliquer sur le bouton supprimer, toute fois, vous ne pouvez supprimer que les demandes qui vous sont assigées (pensez également à envoyer un mail avant la suppression pour en informer l'utilisateur).</li>
                 </ul>
             </div>
             <div class="card mt-2 ">
                 <div class="card-header">
-                   J'ai du mal à comprendre le tabelau ou la page de détails de demande
+                    J'ai du mal à comprendre le tabelau ou la page de détails de demande
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Vous trouverez ci-dessous une image expliquant le tableau des demandes ouvertes.<div class="row"><img class="col-12" src="files/img/requestTable.png" alt="image d'explication du tableau"></div></li>
-                    <li class="list-group-item">Vous trouverez ci-dessous une image expliquant la page de détail d'une demande.<div class="row"><img class="col-12" src="files/img/requestDetails.png" alt="image d'explication du tableau"></div></li>
+                    <li class="list-group-item">Vous trouverez ci-dessous une image expliquant le tableau des demandes ouvertes.<div class="row"><img class="col-12" src="files/img/requestTable.png" alt="image d'explication du tableau"></div>
+                    </li>
+                    <li class="list-group-item">Vous trouverez ci-dessous une image expliquant la page de détail d'une demande.<div class="row"><img class="col-12" src="files/img/requestDetails.png" alt="image d'explication du tableau"></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="card mt-2 ">
+                <div class="card-header">
+                    Que faire si je ne peux pas m'occuper d'une demande ?
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">En tant qu'administrateur responsable de la demande, il vous est possible de la transférer à un autre administrateur. A partir de ce moment vous ne pourrez plus faire la moindre modification.</li>
+                </ul>
+            </div>
+            <div class="card mt-2 ">
+                <div class="card-header">
+                    Que faire des demandes non affectées ?
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">En tant qu'administrateur vous pouvez affecter les demandes qui ne sont gérées par personne à n'importe quel administrateur, vous pouvez également la gérér vous même.</li>
+                </ul>
+            </div>
+            <div class="card mt-2 ">
+                <div class="card-header">
+                    Que faire quand j'ai terminé de m'occuper d'une demande ?
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">En tant qu'administrateur vous pouvez changer l'état d'avancement d'une demande à l'aide des boutons sur la page de détails de la demande, tout au long du traitement, n'oubliez pas de tenir le demandeur au courant par email en appuyant sur le bouton envoyer un mail. Toutefois, faites attention à ne pas trop en envoyer</li>
                 </ul>
             </div>
         </div>

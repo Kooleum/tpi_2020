@@ -23,4 +23,6 @@ python/templates/desktop.ini
 python/templates/css/desktop.ini
 python/templates/img/desktop.ini
 
-mailIdentifiers.php
+mailIdentifiers copy.php
+miseEnProduction.docx
+eitickyStructure.sql
